@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+tags:
+  - smoke
+---
+# clearState wipes the app's data and settings; the relaunch must still load this Stage's bundle.
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: baton-sample-marker
+    timeout: 120000
+- assertVisible: 'marker: ${EXPECTED_MARKER}'
+- takeScreenshot: clear-state

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baton</title>
+  <meta name="description" content="Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.">
+  <link rel="icon" type="image/png" href="baton.png">
+  <meta property="og:title" content="Baton">
+  <meta property="og:description" content="Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.">
+  <meta property="og:image" content="https://lmcjt37.github.io/baton-releases/baton.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #16182b;
+      --muted: #5c6075;
+      --card: #f5f6fa;
+      --border: #e3e5ee;
+      --accent: #0a84ff;
+      --accent-fg: #ffffff;
+      --code-bg: #16182b;
+      --code-fg: #e8eaf6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1020;
+        --fg: #eceef8;
+        --muted: #9a9eb8;
+        --card: #191b30;
+        --border: #2a2d48;
+        --code-bg: #08091a;
+        --code-fg: #e8eaf6;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 56px 16px 40px; }
+    header { text-align: center; }
+    header img { width: 96px; height: 96px; }
+    h1 { font-size: 40px; line-height: 1.1; margin: 12px 0 8px; letter-spacing: -0.02em; }
+    .tagline { font-size: 19px; color: var(--muted); margin: 0 auto; max-width: 560px; }
+    .download { margin: 28px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .button {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 12px;
+      background: var(--accent); color: var(--accent-fg);
+      font-weight: 600; font-size: 17px; text-decoration: none;
+    }
+    .button:hover { filter: brightness(1.08); }
+    .button[aria-disabled="true"] { background: var(--card); color: var(--muted); border: 1px solid var(--border); pointer-events: none; }
+    a { color: var(--accent); }
+    .meta { font-size: 14px; color: var(--muted); }
+    .meta a { color: inherit; }
+    section { margin-top: 44px; }
+    h2 { font-size: 20px; margin: 0 0 12px; }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .cmd {
+      position: relative; margin: 0 0 12px;
+      background: var(--code-bg); color: var(--code-fg);
+      border-radius: 10px; padding: 14px 84px 14px 16px;
+      font: 14px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      overflow-x: auto; white-space: pre;
+    }
+    .cmd .c { color: #8b90b0; }
+    .copy {
+      position: absolute; top: 10px; right: 10px;
+      font: 600 12px/1 -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 7px 10px; border-radius: 7px; cursor: pointer;
+      background: rgba(255, 255, 255, 0.1); color: var(--code-fg); border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    .copy:hover { background: rgba(255, 255, 255, 0.18); }
+    ul.features { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    ul.features li { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 15px; }
+    ul.features strong { display: block; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .links a {
+      padding: 8px 14px; border-radius: 999px; text-decoration: none;
+      border: 1px solid var(--border); background: var(--card); color: var(--fg); font-size: 15px;
+    }
+    .links a:hover { border-color: var(--accent); }
+    .donate { text-align: center; margin-top: 56px; padding: 28px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); }
+    .donate p { color: var(--muted); }
+    .donate img { height: 28px; }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin-top: 32px; }
+    footer a { color: inherit; }
+    @media (max-width: 560px) {
+      main { padding-top: 40px; }
+      h1 { font-size: 34px; }
+      .tagline { font-size: 17px; }
+      ul.features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="baton.png" alt="">
+    <h1>Baton</h1>
+    <p class="tagline">Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.</p>
+
+    <div class="download">
+      <a id="download" class="button" href="https://github.com/lmcjt37/baton-releases/releases/latest">Download for macOS</a>
+      <span id="download-meta" class="meta">Free · macOS · <a href="https://github.com/lmcjt37/baton-releases/releases">All releases</a></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Install with Homebrew</h2>
+    <div class="cmd"><span>brew install --cask lmcjt37/tap/baton</span><button class="copy" type="button">Copy</button></div>
+    <p class="muted">Installs the app and puts the <code>baton</code> command on your PATH. Baton updates itself.</p>
+  </section>
+
+  <section>
+    <h2>Get started</h2>
+    <p>From your React Native project:</p>
+    <div class="cmd"><span>baton init       <span class="c"># detect your project, write baton.config.ts</span>
+baton perform    <span class="c"># run your Maestro flows</span>
+baton ui         <span class="c"># open the dashboard</span></span><button class="copy" type="button">Copy</button></div>
+    <p>Let your AI agents run flows too:</p>
+    <div class="cmd"><span>claude mcp add --scope user baton -- baton mcp</span><button class="copy" type="button">Copy</button></div>
+  </section>
+
+  <section>
+    <h2>Why Baton</h2>
+    <ul class="features">
+      <li><strong>A Metro per worktree</strong>Every worktree gets its own port, so no simulator loads another branch's code.</li>
+      <li><strong>Its own devices</strong>Dedicated simulators and emulators, checked to load the right bundle before any flow runs.</li>
+      <li><strong>Queued, not failed</strong>Runs wait for free devices instead of fighting over them.</li>
+      <li><strong>Built once</strong>App builds are cached by native fingerprint; JS-only branches never rebuild.</li>
+      <li><strong>Agent-ready</strong>One MCP call runs the flows and returns results and screenshots.</li>
+      <li><strong>Watch it live</strong>A menu bar dashboard with progress, screenshots, logs and a live device grid.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Requirements</h2>
+    <p class="muted">macOS with Xcode and an iOS simulator runtime · <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java · a bare React Native or Expo dev-client app · for Android, the Android SDK with an arm64 system image.</p>
+  </section>
+
+  <section>
+    <h2>Learn more</h2>
+    <div class="links">
+      <a href="https://github.com/lmcjt37/baton-releases#documentation">Documentation</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/configuration.md">Configuration</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/cli.md">CLI</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/mcp.md">MCP</a>
+      <a href="https://github.com/lmcjt37/baton-releases/tree/main/examples">Examples</a>
+      <a href="https://github.com/lmcjt37/baton-releases/issues">Issues</a>
+    </div>
+  </section>
+
+  <div class="donate">
+    <h2>Enjoying Baton?</h2>
+    <p>Baton is free. If it saves you time, consider buying me a coffee.</p>
+    <a href="https://buymeacoffee.com/lmcjt"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-yellow?logo=buymeacoffee&logoColor=white" alt="Buy Me a Coffee"></a>
+  </div>
+
+  <footer>
+    Free to use under the <a href="https://github.com/lmcjt37/baton-releases/blob/main/LICENSE">end user licence agreement</a>.
+  </footer>
+</main>
+<script>
+  document.querySelectorAll('.copy').forEach(button => {
+    button.addEventListener('click', async () => {
+      const text = button.previousElementSibling.textContent
+        .split('\n')
+        .map(line => line.replace(/\s+#.*$/, '').trimEnd())
+        .join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied';
+      } catch {
+        button.textContent = 'Press ⌘C';
+      }
+      setTimeout(() => (button.textContent = 'Copy'), 1500);
+    });
+  });
+
+  // Point the button straight at the latest DMG; until the first release exists, say so.
+  fetch('https://api.github.com/repos/lmcjt37/baton-releases/releases/latest')
+    .then(res => (res.ok ? res.json() : Promise.reject(res.status)))
+    .then(release => {
+      const dmg = (release.assets || []).find(a => /\.dmg$/.test(a.name) && !/\d+\.\d+\.\d+/.test(a.name)) ||
+        (release.assets || []).find(a => /\.dmg$/.test(a.name));
+      if (!dmg) return;
+      const link = document.getElementById('download');
+      link.href = dmg.browser_download_url;
+      link.textContent = `Download Baton ${release.tag_name.replace(/^v/, '')}`;
+      const mb = Math.round(dmg.size / 1e6);
+      document.getElementById('download-meta').innerHTML =
+        `Free · macOS · ${mb} MB · <a href="${release.html_url}">Release notes</a> · <a href="https://github.com/lmcjt37/baton-releases/releases">All releases</a>`;
+    })
+    .catch(status => {
+      if (status !== 404) return;
+      const link = document.getElementById('download');
+      link.textContent = 'First release coming soon';
+      link.setAttribute('aria-disabled', 'true');
+      document.getElementById('download-meta').innerHTML =
+        'Watch the <a href="https://github.com/lmcjt37/baton-releases">repo</a> (Watch → Custom → Releases) to hear when it lands.';
+    });
+</script>
+</body>
+</html>

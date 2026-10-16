@@ -1,0 +1,11 @@
+appId: ${APP_ID}
+tags:
+  - smoke
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: baton-sample-marker
+    timeout: 120000
+- assertVisible: 'marker: ${EXPECTED_MARKER}'
+- takeScreenshot: marker

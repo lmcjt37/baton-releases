@@ -14,7 +14,14 @@
   </a>
 </p>
 
-This is the public home for Baton's **releases**, **release notes** and **issues**. Baton is free to use; its source is closed.
+<p align="center">
+  <a href="https://lmcjt37.github.io/baton-releases/"><strong>Website</strong></a> ·
+  <a href="https://github.com/lmcjt37/baton-releases/releases/latest"><strong>Download</strong></a> ·
+  <a href="#documentation"><strong>Docs</strong></a> ·
+  <a href="examples"><strong>Examples</strong></a>
+</p>
+
+This is the public home for Baton's **releases**, **documentation**, **examples** and **issues**. Baton is free to use; its source is closed.
 
 ## Why Baton
 
@@ -83,7 +90,28 @@ Let your AI agents use Baton:
 claude mcp add --scope user baton -- baton mcp
 ```
 
-Any MCP client works: point it at `baton mcp`.
+Any MCP client works: point it at `baton mcp`. See [MCP](guide/mcp.md) for the tools agents get.
+
+New to Baton? Try it on one of the [examples](examples) first.
+
+## Documentation
+
+| | |
+|---|---|
+| [How Baton works](guide/concepts.md) | Stages, Concerts, Acts and Programmes; artifacts; how failures are handled |
+| [Configuration](guide/configuration.md) | `baton.config.ts`, app builds, env, affected runs, Android, machine settings |
+| [CLI](guide/cli.md) | Every command, flag and exit code |
+| [MCP](guide/mcp.md) | Tools for AI agents |
+| [Menu bar app](guide/app.md) | Dashboard, Live viewer, logs, deep links, notifications |
+| [Limitations](guide/limitations.md) | What isn't supported yet |
+| [Roadmap](guide/roadmap.md) | What Baton does today and what's next |
+
+## Examples
+
+| | |
+|---|---|
+| [bare-rn](examples/bare-rn) | Bare React Native, iOS and Android |
+| [expo-dev-client](examples/expo-dev-client) | Expo development build, iOS and Android |
 
 ## Feedback and bugs
 

@@ -1,0 +1,11 @@
+appId: ${APP_ID}
+tags:
+  - smoke
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: baton-sample-ready
+    timeout: 120000
+- assertVisible: 'Baton Expo sample'
+- takeScreenshot: launch

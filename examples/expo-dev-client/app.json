@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "BatonExpoSample",
+    "slug": "baton-expo-sample",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.lmcjt37.batonexposample"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "dev.lmcjt37.batonexposample"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "batonexpo",
+    "plugins": [
+      [
+        "expo-dev-client",
+        {
+          "android": {
+            "defaultLaunchURL": "http://10.0.2.2:8081",
+            "skipOnboarding": true,
+            "showMenuAtLaunch": false,
+            "toolsButton": false
+          }
+        }
+      ]
+    ]
+  }
+}
