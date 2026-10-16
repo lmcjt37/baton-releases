@@ -15,10 +15,10 @@
 | Live viewer | One grid of every running simulator and emulator |
 | Expo dev clients | Expo development builds on iOS and Android |
 | Android | Emulators per worktree, `clearState`-safe Metro routing, snapshot boots, `--platform android` everywhere |
+| Free | No licence or trial; a dismissable "buy me a coffee" window at launch |
 
 ## Next
 
 - Signed, notarised releases with auto-update and a Homebrew cask.
-- A dismissable "buy me a coffee" prompt in the app. Baton stays free.
 
 Ideas and requests are welcome: [open an issue](https://github.com/lmcjt37/baton-releases/issues/new).

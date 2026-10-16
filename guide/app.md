@@ -24,6 +24,7 @@ Baton lives in the menu bar as a conductor's baton, with a status dot. While the
 - **◉ Live** shows every running Act's simulator or emulator in one grid, refreshed about once a second, with its Stage, Concert and latest output line. Click a tile to enlarge it. Capture runs only while Live is open on a visible dashboard, and only for running Acts.
 - **Deep links.** `baton://concert/<id>[/act/<n>]` opens Baton.app on that Concert or Act. The CLI and MCP results print it.
 - **Notifications** are for failures only. Clicking one opens the failing Concert. With Baton's notification style set to *Alerts* (System Settings → Notifications), they also offer an **Encore** button.
+- **Support Baton.** When you open Baton it shows a small "buy me a coffee" window once per launch (not when it starts at login). Tick **Don't show this again** to stop it; **Buy Me a Coffee…** in the menu still opens the page, and **Show Donation Prompt at Launch** turns the window back on.
 - **When the daemon is idle** (it exits after a quiet spell), the menu and dashboard show the **last saved state**. The menu offers **Start Daemon**, or **Restart Daemon** while it's running; it asks before cancelling running Concerts.
 
 ## The daemon and the app
