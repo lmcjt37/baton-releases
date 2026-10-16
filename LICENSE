@@ -1,0 +1,89 @@
+BATON END USER LICENCE AGREEMENT
+
+Copyright (c) 2026 Luke Taylor. All rights reserved.
+
+Please read this agreement carefully. By installing, copying or using Baton
+(the "Software") you agree to these terms. If you do not agree, do not install
+or use the Software.
+
+1. PARTIES
+This agreement is between you (the individual, or the organisation you act
+for) and Luke Taylor ("the Licensor"), who owns the Software.
+
+2. LICENCE
+Subject to these terms, the Licensor grants you a free, non-exclusive,
+non-transferable, non-sublicensable licence to install and use the Software,
+for personal or commercial purposes, on any number of Macs you or your
+organisation control.
+
+3. DONATIONS
+The Software is free. You may choose to support its development with a
+donation. A donation is a voluntary gift: it does not buy a licence, support,
+features or any other right, and is not refundable except where required by
+law.
+
+4. RESTRICTIONS
+Except as expressly allowed by applicable law, you must not:
+  (a) sell, rent, lend, sublicense or redistribute the Software, or make it
+      available to others other than by pointing them to the Licensor's
+      official download locations;
+  (b) reverse engineer, decompile, disassemble, deobfuscate or attempt to
+      derive the source code of the Software;
+  (c) modify, adapt or create derivative works of the Software;
+  (d) remove or alter any proprietary notices; or
+  (e) use the Software to build a competing product.
+
+5. OWNERSHIP
+The Software is licensed, not sold. The Licensor and its licensors keep all
+rights, title and interest in the Software, including all intellectual
+property rights. All rights not expressly granted are reserved.
+
+6. THIRD-PARTY COMPONENTS
+The Software includes third-party open-source components, which are licensed
+under their own terms. Those terms apply to those components and nothing in
+this agreement limits your rights under them.
+
+7. YOUR DATA
+The Software runs on your Mac. Your projects, test flows, screenshots and
+logs stay on your machine. The Software contacts GitHub to check for and
+download updates; this sends your IP address and the Software's version to
+GitHub, and no other data.
+
+8. UPDATES
+The Licensor may provide updates, which are covered by this agreement unless
+they come with their own terms. The Licensor has no obligation to provide
+updates, support or maintenance, and may stop doing so at any time.
+
+9. TERMINATION
+This licence ends automatically if you breach these terms. On termination you
+must stop using and delete all copies of the Software. Sections 4 to 6 and 10
+to 13 survive termination.
+
+10. NO WARRANTY
+To the maximum extent permitted by law, the Software is provided "as is" and
+"as available", without warranty of any kind, express or implied, including
+warranties of merchantability, satisfactory quality, fitness for a particular
+purpose and non-infringement. The Licensor does not warrant that the Software
+will be error-free or uninterrupted, or that it will not affect simulators,
+emulators, build caches or other files it manages.
+
+11. LIMITATION OF LIABILITY
+To the maximum extent permitted by law, the Licensor is not liable for any
+indirect, incidental, special or consequential loss, or for loss of profits,
+revenue, data or business, arising out of or in connection with the
+Software. As the Software is provided free of charge, the Licensor's total
+liability is limited to GBP 50. Nothing in this agreement limits or excludes
+liability that cannot be limited or excluded by law, including your
+statutory rights as a consumer.
+
+12. GENERAL
+This agreement is the entire agreement between you and the Licensor about
+the Software. If any part is found unenforceable, the rest remains in effect.
+The Licensor may update these terms for future versions of the Software.
+Failure to enforce a term is not a waiver of it.
+
+13. GOVERNING LAW
+This agreement is governed by the laws of England and Wales, and the courts
+of England and Wales have exclusive jurisdiction, except where mandatory
+consumer law in your country of residence gives you the right to bring a
+claim locally.
