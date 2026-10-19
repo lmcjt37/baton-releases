@@ -72,6 +72,38 @@ Then open Baton from Applications once: macOS asks before running an app downloa
 
 Baton checks for updates itself and installs them only when nothing is running, so a test run is never interrupted.
 
+### Uninstalling
+
+**Homebrew:**
+
+```sh
+brew uninstall --cask baton         # removes the app and the baton command; keeps settings and simulators
+brew uninstall --zap --cask baton   # also deletes every simulator and emulator Baton created, and all its data
+```
+
+**Downloaded app:**
+
+1. Run `baton prune --all` to delete every simulator and emulator Baton created (this cancels any running test runs), then `baton stop --force`.
+2. Quit Baton from the menu bar and drag **Baton** from Applications to the Bin.
+3. If you used **Install 'baton' Command…**, run `rm /usr/local/bin/baton` (with `sudo` if it asks).
+4. Delete Baton's data:
+
+   ```sh
+   rm -rf ~/.baton "$HOME/Library/Application Support/Baton" \
+     ~/Library/Caches/dev.lmcjt37.baton ~/Library/HTTPStorages/dev.lmcjt37.baton \
+     ~/Library/Preferences/dev.lmcjt37.baton.plist "$HOME/Library/Saved Application State/dev.lmcjt37.baton.savedState"
+   ```
+
+Either way, each project keeps its `baton.config.ts` and its `.baton/` folder of run results; delete those yourself if you want them gone.
+
+### Troubleshooting installation
+
+| Problem | Fix |
+|---|---|
+| `baton` says to open Baton from Applications once | macOS hasn't approved the app yet. Open Baton once, click **Open**, then run `baton` again. |
+| Baton isn't in Applications after installing with `HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"` | It's in the Applications folder in your home folder, `~/Applications`, which Finder's **Applications** sidebar item doesn't show. Run `open ~/Applications/Baton.app`, or find it with Spotlight. Prefer the main Applications folder? Run `brew reinstall --cask baton` in a shell without that variable. |
+| Every cask now installs into `~/Applications` | `export HOMEBREW_CASK_OPTS=...` applies to every later `brew install` in that shell (and in all of them if it's in your shell profile). To change only Baton's location, put it before the command instead: `HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications" brew install --cask lmcjt37/tap/baton`. |
+
 ## Getting started
 
 From your React Native project:
