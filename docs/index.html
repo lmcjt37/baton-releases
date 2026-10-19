@@ -61,6 +61,9 @@
     h2 { font-size: 20px; margin: 0 0 12px; }
     p { margin: 0 0 12px; }
     .muted { color: var(--muted); }
+    h3 { font-size: 16px; margin: 20px 0 8px; }
+    .steps { margin: 0 0 12px; padding-left: 22px; }
+    .steps li { margin: 0 0 4px; }
     .cmd {
       position: relative; margin: 0 0 12px;
       background: var(--code-bg); color: var(--code-fg);
@@ -111,9 +114,18 @@
   </header>
 
   <section>
-    <h2>Install with Homebrew</h2>
+    <h2>Install</h2>
+    <h3>With Homebrew</h3>
     <div class="cmd"><span>brew install --cask lmcjt37/tap/baton</span><button class="copy" type="button">Copy</button></div>
-    <p class="muted">Installs the app and puts the <code>baton</code> command on your PATH. Baton updates itself.</p>
+    <p class="muted">Installs the app and puts the <code>baton</code> command on your PATH. Then open Baton from Applications once: macOS asks before running an app downloaded from the internet, and <code>baton</code> waits for that.</p>
+    <h3>Or download</h3>
+    <ol class="steps">
+      <li>Download the DMG with the button above.</li>
+      <li>Open it, accept the licence, and drag <strong>Baton</strong> to Applications.</li>
+      <li>Open Baton and click <strong>Open</strong> if macOS asks. It lives in the menu bar, not the Dock.</li>
+      <li>From the menu bar icon, choose <strong>Install 'baton' Command…</strong> to put <code>baton</code> on your PATH.</li>
+    </ol>
+    <p class="muted">Either way, Baton updates itself, and only when no test run is in progress.</p>
   </section>
 
   <section>

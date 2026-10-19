@@ -57,7 +57,7 @@ Baton.app bundles its own Node; you don't need Node installed.
 
 1. Download **Baton-universal.dmg** from the [latest release](https://github.com/lmcjt37/baton-releases/releases/latest).
 2. Open it, accept the licence, and drag **Baton** to Applications.
-3. Open Baton. It lives in the menu bar, not the Dock.
+3. Open Baton and click **Open** if macOS asks. It lives in the menu bar, not the Dock.
 4. From the menu bar icon, choose **Install 'baton' Command…** to put `baton` on your PATH.
 
 ### Homebrew
@@ -67,6 +67,8 @@ brew install --cask lmcjt37/tap/baton
 ```
 
 This installs the app and links the `baton` command for you. *(Available from the first release.)*
+
+Then open Baton from Applications once: macOS asks before running an app downloaded from the internet, and `baton` waits for that.
 
 ### Updates
 
