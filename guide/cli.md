@@ -21,7 +21,7 @@ baton status                    # Stages, Concerts, budget, External processes
 | `baton encore <id> [--no-wait]` | **Encore**: rerun only the failed (or flaky) flows of a finished Concert, with the same config and env |
 | `baton cancel <id>` | Cancel a queued or running Concert |
 | `baton close [stage\|path]` | Stop a Stage's Metro and shut down its simulators and emulators |
-| `baton prune` | Delete Stages whose worktree is gone, plus orphaned `baton-*` simulators and Baton AVDs |
+| `baton prune [--all]` | Delete Stages whose worktree is gone, plus orphaned `baton-*` simulators and Baton AVDs. `--all` removes every Stage and every simulator and AVD Baton created, cancelling running Concerts |
 | `baton cache ls` · `prune [--all]` · `rm <fingerprint>` | Cached app builds: list them, trim to the size cap (`binaryCacheGb`, default 10), or remove one bad build (this also clears the DerivedData it was built from) |
 | `baton stop [--force]` | Stop the daemon and everything it manages |
 | `baton mcp` | Run the MCP server on stdio ([MCP](mcp.md)) |

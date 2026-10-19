@@ -1,0 +1,58 @@
+name: Bug report
+description: Something in Baton doesn't work as it should
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. baton perform ...
+        2. ...
+  - type: input
+    id: baton
+    attributes:
+      label: Baton version
+      description: Menu bar icon → About Baton.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS and Xcode versions
+      placeholder: macOS 26.1, Xcode 26.1
+    validations:
+      required: true
+  - type: input
+    id: maestro
+    attributes:
+      label: Maestro version
+      description: "`maestro --version`"
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [iOS simulator, Android emulator, Both]
+  - type: dropdown
+    id: app
+    attributes:
+      label: App type
+      options: [Bare React Native, Expo (expo-dev-client)]
+  - type: textarea
+    id: status
+    attributes:
+      label: "`baton status` output"
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "`baton logs <concertId>`, or `~/.baton/daemon.log`. Remove anything private."
+      render: text

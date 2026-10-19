@@ -15,10 +15,9 @@
 | Live viewer | One grid of every running simulator and emulator |
 | Expo dev clients | Expo development builds on iOS and Android |
 | Android | Emulators per worktree, `clearState`-safe Metro routing, snapshot boots, `--platform android` everywhere |
+| Releases | Signed, notarised universal app; updates itself; `brew install --cask lmcjt37/tap/baton` |
 | Free | No licence or trial; a dismissable "buy me a coffee" window at launch |
 
 ## Next
-
-- Signed, notarised releases with auto-update and a Homebrew cask.
 
 Ideas and requests are welcome: [open an issue](https://github.com/lmcjt37/baton-releases/issues/new).

@@ -51,8 +51,6 @@ Baton.app bundles its own Node; you don't need Node installed.
 
 ## Installation
 
-> The first public release is on its way. Watch this repo (**Watch → Custom → Releases**) to hear when it lands.
-
 ### Download
 
 1. Download **Baton-universal.dmg** from the [latest release](https://github.com/lmcjt37/baton-releases/releases/latest).
@@ -66,7 +64,7 @@ Baton.app bundles its own Node; you don't need Node installed.
 brew install --cask lmcjt37/tap/baton
 ```
 
-This installs the app and links the `baton` command for you. *(Available from the first release.)*
+This installs the app and links the `baton` command for you.
 
 Then open Baton from Applications once: macOS asks before running an app downloaded from the internet, and `baton` waits for that.
 
