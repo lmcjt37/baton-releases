@@ -14,3 +14,5 @@ baton perform smoke
 ```
 
 **See the isolation for yourself:** copy an example, change `MARKER` in the copy's `App.tsx` and `EXPECTED_MARKER` in its `baton.config.ts`, then run `baton perform smoke` in both folders at once. Each run passes only if its own simulators show its own code.
+
+**See failures, flaky flows and Encore:** in `bare-rn`, run `baton perform demo`, then `baton encore <id>`. See its [README](bare-rn/README.md#failures-retries-and-encore).

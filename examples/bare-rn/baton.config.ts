@@ -40,5 +40,7 @@ export default {
 
   programmes: {
     smoke: { tags: ['smoke'], acts: 2 },
+    // A pass, a failure and a flaky flow in one Concert: `baton perform demo`. One Act, so the retry uses the same simulator.
+    demo: { flows: ['.maestro', '.maestro-demo'], acts: 1, retries: 1 },
   },
 };
