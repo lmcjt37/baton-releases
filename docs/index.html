@@ -89,6 +89,9 @@
       border: 1px solid var(--border); background: var(--card); color: var(--fg); font-size: 15px;
     }
     .links a:hover { border-color: var(--accent); }
+    .demo { margin: 0 0 20px; }
+    .demo img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); }
+    .demo figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
     .donate { text-align: center; margin-top: 56px; padding: 28px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); }
     .donate p { color: var(--muted); }
     footer { text-align: center; font-size: 13px; color: var(--muted); margin-top: 32px; }
@@ -164,6 +167,19 @@ baton ui         <span class="c"># open the dashboard</span></span><button class
   <section>
     <h2>Requirements</h2>
     <p class="muted">macOS with Xcode and an iOS simulator runtime · <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java · a bare React Native or Expo dev-client app · for Android, the Android SDK with an arm64 system image.</p>
+  </section>
+
+  <section>
+    <h2>See it in action</h2>
+    <figure class="demo">
+      <a href="media/three-worktrees.mp4"><img src="media/three-worktrees.gif" width="960" height="540" loading="lazy" alt="Three worktrees run their flows at once, each on its own simulator showing its own branch"></a>
+      <figcaption>Three worktrees, three simulators, no collisions: each app shows its own branch.</figcaption>
+    </figure>
+    <figure class="demo">
+      <a href="media/agent-via-mcp.mp4"><img src="media/agent-via-mcp.gif" width="960" height="540" loading="lazy" alt="Claude Code runs a worktree's flows through Baton's MCP server and summarises the results"></a>
+      <figcaption>An agent runs the flows over MCP, follows the progress and reports back.</figcaption>
+    </figure>
+    <p class="meta">Click a clip to watch it full size.</p>
   </section>
 
   <section>
