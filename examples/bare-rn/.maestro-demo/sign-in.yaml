@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+---
+# Always fails: the sample has no sign-in screen. Shows a failed flow, its screenshot and log.
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: baton-sample-ready
+    timeout: 120000
+- takeScreenshot: before-sign-in
+- tapOn: Sign in

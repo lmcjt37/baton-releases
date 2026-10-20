@@ -1,0 +1,12 @@
+appId: ${APP_ID}
+---
+# Fails, then passes when retried, so Baton reports it flaky (iOS; on Android it passes).
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: baton-sample-ready
+    timeout: 120000
+- tapOn:
+    id: baton-sample-flaky
+- takeScreenshot: flaky-check
+- assertVisible: 'flaky check: passed'
