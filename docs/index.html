@@ -122,7 +122,10 @@
 
   <section>
     <h2>Install</h2>
-    <h3>With Homebrew</h3>
+    <h3>With one command</h3>
+    <div class="cmd"><span>curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh</span><button class="copy" type="button">Copy</button></div>
+    <p class="muted">Downloads the latest release, checks its checksum and signature, installs Baton to Applications and puts the <code>baton</code> command on your PATH. Nothing else to do.</p>
+    <h3>Or with Homebrew</h3>
     <div class="cmd"><span>brew install --cask lmcjt37/tap/baton</span><button class="copy" type="button">Copy</button></div>
     <p class="muted">Installs the app and puts the <code>baton</code> command on your PATH. Then open Baton from Applications once: macOS asks before running an app downloaded from the internet, and <code>baton</code> waits for that.</p>
     <h3>Or download</h3>
@@ -132,7 +135,7 @@
       <li>Open Baton and click <strong>Open</strong> if macOS asks. It lives in the menu bar, not the Dock.</li>
       <li>From the menu bar icon, choose <strong>Install 'baton' Command…</strong> to put <code>baton</code> on your PATH.</li>
     </ol>
-    <p class="muted">Either way, Baton updates itself, and only when no test run is in progress.</p>
+    <p class="muted">Whichever you choose, Baton updates itself, and only when no test run is in progress.</p>
     <p class="muted">To remove it, run <code>brew uninstall --zap --cask baton</code>, or see <a href="https://github.com/lmcjt37/baton-releases#uninstalling">uninstalling</a> and <a href="https://github.com/lmcjt37/baton-releases#troubleshooting-installation">troubleshooting</a>.</p>
   </section>
 

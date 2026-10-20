@@ -51,6 +51,16 @@ Baton.app bundles its own Node; you don't need Node installed.
 
 ## Installation
 
+### Install script
+
+```sh
+curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh
+```
+
+This downloads the latest release, checks it against `SHA256SUMS` and its code signature, installs Baton to `/Applications` (or `~/Applications` if that isn't writable) and links the `baton` command into `/opt/homebrew/bin` or `/usr/local/bin`. There's no need to open Baton first.
+
+To reinstall, add `--force`: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh -s -- --force`. For a specific version: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | BATON_VERSION=1.1.0 sh`.
+
 ### Download
 
 1. Download **Baton-universal.dmg** from the [latest release](https://github.com/lmcjt37/baton-releases/releases/latest).
@@ -81,11 +91,11 @@ brew uninstall --cask baton         # removes the app and the baton command; kee
 brew uninstall --zap --cask baton   # also deletes every simulator and emulator Baton created, and all its data
 ```
 
-**Downloaded app:**
+**Install script or downloaded app:**
 
 1. Run `baton prune --all` to delete every simulator and emulator Baton created (this cancels any running test runs), then `baton stop --force`.
 2. Quit Baton from the menu bar and drag **Baton** from Applications to the Bin.
-3. If you used **Install 'baton' Command…**, run `rm /usr/local/bin/baton` (with `sudo` if it asks).
+3. Remove the `baton` command: `rm "$(command -v baton)"` (with `sudo` if it asks).
 4. Delete Baton's data:
 
    ```sh
