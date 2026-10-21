@@ -18,4 +18,6 @@ Any MCP client can launch `baton mcp`, which speaks MCP over stdio. It starts th
 
 `worktreePath` defaults to the client's MCP root (or the server's working directory), and must be absolute when given.
 
+While a Concert waits, its progress says what for: a free simulator (`#2 in queue`) or another session's Concert on the same worktree (`waiting for Concert 1a2b3c4d (claude-code) on this worktree`). If the wait times out first, the result says it's still queued and to call `baton_await`, not to start another run. A summary starts with a warning when the worktree's code changed while the Concert waited or ran, which happens when sessions share a worktree.
+
 Results include a `baton://concert/<id>` link, so a link in an agent's transcript opens that run in the [dashboard](app.md).

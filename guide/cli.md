@@ -19,7 +19,7 @@ baton status                    # Stages, Concerts, budget, External processes
 | `baton status` | Everything Baton manages, plus External processes |
 | `baton logs <id> [--act n]` · `baton logs --stage <id\|path>` | Maestro output, or a Stage's Metro log |
 | `baton encore <id> [--no-wait]` | **Encore**: rerun only the failed (or flaky) flows of a finished Concert, with the same config and env |
-| `baton cancel <id>` | Cancel a queued or running Concert |
+| `baton cancel <id>` | Cancel a queued or running Concert. It's cancelled straight away; Maestro is stopped, forcibly if it doesn't exit within 5 seconds |
 | `baton close [stage\|path]` | Stop a Stage's Metro and shut down its simulators and emulators |
 | `baton prune [--all]` | Delete Stages whose worktree is gone, plus orphaned `baton-*` simulators and Baton AVDs. `--all` removes every Stage and every simulator and AVD Baton created, cancelling running Concerts |
 | `baton cache ls` · `prune [--all]` · `rm <fingerprint>` | Cached app builds: list them, trim to the size cap (`binaryCacheGb`, default 10), or remove one bad build (this also clears the DerivedData it was built from) |
@@ -27,7 +27,7 @@ baton status                    # Stages, Concerts, budget, External processes
 | `baton mcp` | Run the MCP server on stdio ([MCP](mcp.md)) |
 | `baton ui` | Open the menu bar app and dashboard ([Menu bar app](app.md)) |
 
-Add `--json` to any command for machine-readable output.
+Add `--json` to any command for machine-readable output. `baton --version` (`-v`) prints the version.
 
 ## Exit codes
 

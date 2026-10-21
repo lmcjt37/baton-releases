@@ -103,5 +103,6 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 | `daemonIdleMs` | 1 minute | How long an idle daemon keeps running |
 | `infraRetries` | 2 | Automatic retries for infra failures |
 | `bundleCheckTimeoutMs` | 90 seconds | How long the app has to connect to its Metro |
+| `maestroStallMs` | 5 minutes | Stop Maestro when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off) |
 | `binaryCacheGb` | 10 | Size cap for cached app builds |
 | `emulatorSnapshots` | `true` | Boot emulators from a snapshot (~2 GB of disk per emulator) |
