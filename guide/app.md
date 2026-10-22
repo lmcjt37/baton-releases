@@ -24,8 +24,9 @@ Baton lives in the menu bar as a conductor's baton, with a status dot. While the
 - **◉ Live** shows every running Act's simulator or emulator in one grid, refreshed about once a second, with its Stage, Concert and latest output line. Click a tile to enlarge it. Capture runs only while Live is open on a visible dashboard, and only for running Acts.
 - **Deep links.** `baton://concert/<id>[/act/<n>]` opens Baton.app on that Concert or Act. The CLI and MCP results print it.
 - **Notifications** are for failures only. Clicking one opens the failing Concert. With Baton's notification style set to *Alerts* (System Settings → Notifications), they also offer an **Encore** button.
-- **Updates.** Baton checks for a new version at launch and daily, downloads it in the background, then shows **Restart to Update to X** in the menu. If Concerts are queued or running, it waits for them to finish; it never cancels a run to update. Quitting Baton also installs a downloaded update.
-- **Support Baton.** When you open Baton it shows a small "buy me a coffee" window once per launch (not when it starts at login). Tick **Don't show this again** to stop it; **Buy Me a Coffee…** in the menu still opens the page, and **Show Donation Prompt at Launch** turns the window back on.
+- **Updates.** Baton checks for a new version at launch and daily, downloads it in the background, then shows **Restart to Update to X** in the menu. **Check for Updates…** checks straight away, then downloads, installs and restarts Baton if there's a newer version. If Concerts are queued or running, either way waits for them to finish; it never cancels a run to update. Quitting Baton also installs a downloaded update. Only a release build in Applications updates itself; otherwise Check for Updates… says why and offers the downloads page.
+- **Settings…** (⌘,) in the menu: turn automatic update checks off, check for updates, open Baton at login (on by default), show the donation prompt at launch, and check that the `baton` command is installed, with **Install…** if it isn't.
+- **Support Baton.** When you open Baton it shows a small "buy me a coffee" window once per launch (not when it starts at login). Tick **Don't show this again** to stop it; **Buy Me a Coffee…** in the menu still opens the page, and **Show Donation Prompt at Launch** (in the menu and Settings) turns the window back on.
 - **When the daemon is idle** (it exits after a quiet spell), the menu and dashboard show the **last saved state**. The menu offers **Start Daemon**, or **Restart Daemon** while it's running; it asks before cancelling running Concerts.
 
 ## The daemon and the app
@@ -36,4 +37,4 @@ Before starting the daemon, the app loads your login shell's `PATH`/`JAVA_HOME`,
 
 ## The `baton` command
 
-**Install 'baton' Command…** in the tray menu writes `/usr/local/bin/baton` (VS Code style). It asks for admin rights only if that folder isn't writable, and the command runs the CLI on the app's own bundled Node. If you installed with the install script or Homebrew, `baton` is already on your `PATH` and the menu item says so.
+**Install 'baton' Command…** in the tray menu writes `/usr/local/bin/baton` (VS Code style). It asks for admin rights only if that folder isn't writable, and the command runs the CLI on the app's own bundled Node. If you installed with the install script or Homebrew, `baton` is already on your `PATH` and the menu item says so. **Settings…** shows where `baton` is installed.
