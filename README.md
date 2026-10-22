@@ -82,6 +82,13 @@ Then open Baton from Applications once: macOS asks before running an app downloa
 
 Baton checks for updates itself and installs them only when nothing is running, so a test run is never interrupted.
 
+To update now, or if you've turned automatic updates off in **Settings…**:
+
+- **Menu bar:** **Check for Updates…** (Baton 1.3.0 and later) downloads, installs and restarts Baton, after any running tests finish.
+- **Homebrew:** `brew upgrade --cask --greedy baton`
+- **Install script:** `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh -s -- --force` quits Baton and replaces it with the latest release.
+- **Download:** get the [latest DMG](https://github.com/lmcjt37/baton-releases/releases/latest), quit Baton, and drag it to Applications, replacing the old copy.
+
 ### Uninstalling
 
 **Homebrew:**
