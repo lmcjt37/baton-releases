@@ -17,9 +17,9 @@ baton status                    # Stages, Concerts, budget, External processes
 | `baton perform [programme] [-p ios\|android] [-f flow] [-t tags] [-x exclude] [-a acts] [-r retries] [-e K=V] [--affected] [--no-wait]` | Queue a Concert for this worktree; follows progress by default |
 | `baton await <id> [--timeout s]` | Wait for a Concert |
 | `baton status` | Everything Baton manages, plus External processes |
-| `baton logs <id> [--act n]` · `baton logs --stage <id\|path>` | Maestro output, or a Stage's Metro log |
+| `baton logs <id> [--act n]` · `baton logs --stage <id\|path>` | Test runner output (Maestro or Detox), or a Stage's Metro log |
 | `baton encore <id> [--no-wait]` | **Encore**: rerun only the failed (or flaky) flows of a finished Concert, with the same config and env |
-| `baton cancel <id>` | Cancel a queued or running Concert. It's cancelled straight away; Maestro is stopped, forcibly if it doesn't exit within 5 seconds |
+| `baton cancel <id>` | Cancel a queued or running Concert. It's cancelled straight away; the test runner is stopped, forcibly if it doesn't exit within 5 seconds |
 | `baton close [stage\|path]` | Stop a Stage's Metro and shut down its simulators and emulators |
 | `baton prune [--all]` | Delete Stages whose worktree is gone, plus orphaned `baton-*` simulators and Baton AVDs. `--all` removes every Stage and every simulator and AVD Baton created, cancelling running Concerts |
 | `baton cache ls` · `prune [--all]` · `rm <fingerprint>` | Cached app builds: list them, trim to the size cap (`binaryCacheGb`, default 10), or remove one bad build (this also clears the DerivedData it was built from) |
