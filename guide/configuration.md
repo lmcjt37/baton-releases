@@ -22,12 +22,15 @@ export default {
       build: {                                      // or: path: 'android/app/build/…/app-debug.apk'
         command: 'cd android && ./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a',
         output: 'android/app/build/outputs/apk/debug/app-debug.apk',
+        // testOutput: '…/apk/androidTest/debug/app-debug-androidTest.apk', // Detox only (or testPath with path)
       },
     },
     // emulator: { systemImage: 'system-images;android-36;google_apis;arm64-v8a' }, // default: newest arm64 image
     env: { APP_ID: 'com.example.app' },             // layered over `env` for Android Concerts
   },
-  flowsDir: '.maestro',
+  // runner: 'detox',                               // default 'maestro'; see "Test runners"
+  flowsDir: '.maestro',                              // default: .maestro (Maestro) or e2e (Detox)
+  // maestro: { args: [...] },                     // extra `maestro test` args (detox: { args } for Detox)
   simulator: { deviceType: 'iPhone 17', runtime: 'iOS-26-5' },
   defaultActs: 2,
 
@@ -52,6 +55,7 @@ export default {
 
   programmes: {
     smoke: { tags: ['smoke'], acts: 2, env: { ENVIRONMENT: 'staging' } },
+    nightly: { args: ['--config', '.maestro/nightly.yaml'] }, // added after maestro.args
   },
 };
 ```
@@ -66,9 +70,17 @@ Each Concert's `build.log` and the dashboard's **Details** show where the build 
 
 ## Env
 
-**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Values declared in config, programmes or runs are passed to Maestro as `-e`.
+**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Values declared in config, programmes or runs are passed to Maestro as `-e`. Detox tests read them from `process.env`.
 
 **Functions and hooks** run in a child process per Concert, with the worktree as its working directory. A hang or crash in your code affects only that Concert, never the daemon.
+
+## Test runners
+
+`runner` picks the project's test runner: `'maestro'` (default) or `'detox'`. One runner per project. Baton calls each test a **flow**: a Maestro flow file, or a Detox test case (`it`).
+
+**Args.** `maestro.args` or `detox.args` are added to every run's command, then the programme's `args`. Baton rejects flags it sets itself (such as Maestro's `--shard-split` or Detox's `-c`). Detox passes args through a shell, so each Detox arg must be one word: put a flag and its value in separate strings.
+
+**Detox** (iOS and Android). Baton extends your Detox config with its own device, the cached app build and the Stage's Metro, and splits test files across Acts. Tags are `#words` in test names (`it('signs in #smoke', …)`), and tests read env from `process.env`. On Android, the build also makes Detox's test APK (`android.app.build.testOutput`). Setup, what Baton generates and limits: [Detox](detox.md).
 
 ## Affected runs
 
@@ -103,6 +115,6 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 | `daemonIdleMs` | 1 minute | How long an idle daemon keeps running |
 | `infraRetries` | 2 | Automatic retries for infra failures |
 | `bundleCheckTimeoutMs` | 90 seconds | How long the app has to connect to its Metro |
-| `stallMs` | 5 minutes | Stop Maestro when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off). The old name `maestroStallMs` still works but is deprecated: Baton warns until you rename it |
+| `stallMs` | 5 minutes | Stop the test runner (Maestro or Detox) when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off). Was `maestroStallMs` before 2.0 |
 | `binaryCacheGb` | 10 | Size cap for cached app builds |
 | `emulatorSnapshots` | `true` | Boot emulators from a snapshot (~2 GB of disk per emulator) |
