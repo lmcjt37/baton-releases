@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baton</title>
-  <meta name="description" content="Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.">
+  <meta name="description" content="Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.">
   <link rel="icon" type="image/png" href="baton.png">
   <meta property="og:title" content="Baton">
-  <meta property="og:description" content="Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.">
+  <meta property="og:description" content="Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.">
   <meta property="og:image" content="https://lmcjt37.github.io/baton-releases/baton.png">
   <script>document.documentElement.classList.add('js');</script>
   <style>
@@ -105,6 +105,10 @@
     .stage .note { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); text-align: center; }
     .stage .note s { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
     @media (prefers-reduced-motion: reduce) { ul.features li { transition: none; } ul.features li:hover { transform: none; } }
+    .lede { font-size: 17.5px; }
+    ul.uses { padding: 0; margin: 20px 0 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+    ul.uses li { padding-left: 14px; border-left: 2px solid var(--accent); font-size: 15px; color: var(--muted); }
+    ul.uses strong { display: block; color: var(--fg); }
     .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 0; margin: 16px 0 0; list-style: none; }
     .chips li { font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); color: var(--muted); }
     .tabs { display: flex; gap: 4px; margin: 0 0 12px; border-bottom: 1px solid var(--border); }
@@ -138,6 +142,7 @@
       h1 { font-size: 34px; }
       .tagline { font-size: 17px; }
       ul.features { grid-template-columns: 1fr; }
+      ul.uses { grid-template-columns: 1fr; }
       .lane { grid-template-columns: 1fr 14px auto 14px 1fr; }
       .node { font-size: 12px; padding: 8px; }
       .eyebrow + h2 { font-size: 22px; }
@@ -153,7 +158,7 @@
   <header>
     <img src="baton.png" alt="">
     <h1>Baton</h1>
-    <p class="tagline">Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.</p>
+    <p class="tagline">Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.</p>
     <ul class="chips" aria-label="Works with">
       <li>Maestro</li><li>Detox</li><li>iOS</li><li>Android</li><li>MCP for agents</li>
     </ul>
@@ -165,10 +170,22 @@
     <a class="launch" href="https://www.producthunt.com/products/baton-6?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-baton-6" target="_blank" rel="noopener noreferrer">
       <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1285955&amp;t=1792482792907&amp;theme=dark">
-        <img alt="Baton - Maestro + RN apps + worktrees, with no collisions. | Product Hunt" width="185" height="40" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1285955&amp;t=1792482792907&amp;theme=light">
+        <img alt="Baton - Agent first dev tool for visual testing harnesses with RN | Product Hunt" width="185" height="40" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1285955&amp;t=1792482792907&amp;theme=light">
       </picture>
     </a>
   </header>
+
+  <section>
+    <p class="eyebrow">What it's for</p>
+    <h2>A visual test harness your agents can share</h2>
+    <p class="lede">Built after parallel agents running Maestro kept tripping over each other's port allocation and resources. Baton gives every worktree its own, queues the rest, and lets agents run Maestro or Detox tests with one MCP or CLI call, while you follow along in the dashboard.</p>
+    <ul class="uses">
+      <li><strong>Validate changes</strong>Agents check their work on a real simulator or emulator before calling it done.</li>
+      <li><strong>Fix E2E tests</strong>Rerun failing tests, read the error and screenshots, and try again.</li>
+      <li><strong>Capture evidence</strong>Screenshots from every run, ready for a pull request or review.</li>
+      <li><strong>Not just for agents</strong>Run tests yourself from the terminal or the menu bar, queued fairly alongside your agents.</li>
+    </ul>
+  </section>
 
   <section>
     <p class="eyebrow">See it in action</p>
