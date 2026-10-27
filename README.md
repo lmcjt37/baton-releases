@@ -5,7 +5,7 @@
 <h1 align="center">Baton</h1>
 
 <p align="center">
-  <strong>Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.</strong>
+  <strong>Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.</strong>
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@ This is the public home for Baton's **releases**, **documentation**, **examples*
 
 ## Why Baton
 
-Several worktrees, each with a human or an AI agent on its own branch, all want to run Maestro flows. On one Mac they get in each other's way: every dev build loads JS from Metro on `:8081`, so one worktree can serve *its* code to every simulator; two runs on one simulator break each other; and too many simulators stall the machine.
+Several worktrees, each with a human or an AI agent on its own branch, all want to run E2E tests. On one Mac they get in each other's way: every dev build loads JS from Metro on `:8081`, so one worktree can serve *its* code to every simulator; two runs on one simulator break each other; and too many simulators stall the machine.
 
 Baton gives each worktree its own Metro, its own simulators and emulators, and a fair place in the queue:
 
@@ -42,8 +42,9 @@ Baton gives each worktree its own Metro, its own simulators and emulators, and a
 | | Minimum | Tested with |
 |---|---|---|
 | macOS + Xcode, with an iOS simulator runtime | not yet established | macOS 26.6, Xcode 26.5, iOS 18.6 and 26.5 |
-| [Maestro CLI](https://maestro.mobile.dev) | **2.11.0** | 2.11.0 |
-| Java (required by Maestro) | `JAVA_HOME` set, or `java` on PATH | |
+| *Maestro projects:* [Maestro CLI](https://maestro.mobile.dev) | **2.11.0** | 2.11.0 |
+| *Maestro projects:* Java | `JAVA_HOME` set, or `java` on PATH | |
+| *Detox projects:* [Detox](https://wix.github.io/Detox/) in the project, and `applesimutils` for iOS | Detox 20 | Detox 20.51, Jest 29 |
 | React Native app | bare RN using Metro, or Expo with `expo-dev-client` | RN 0.83, 0.86 (Expo SDK 57), 0.87 |
 | *Android only:* Android SDK with the emulator and an arm64 system image | Android Studio's SDK (`ANDROID_HOME`, or `~/Library/Android/sdk`) | emulator 36.5, Android 17 (API 37) |
 
@@ -148,7 +149,8 @@ New to Baton? Try it on one of the [examples](examples) first.
 | | |
 |---|---|
 | [How Baton works](guide/concepts.md) | Stages, Concerts, Acts and Programmes; artifacts; how failures are handled |
-| [Configuration](guide/configuration.md) | `baton.config.ts`, app builds, env, affected runs, Android, machine settings |
+| [Configuration](guide/configuration.md) | `baton.config.ts`, app builds, env, test runners, affected runs, Android, machine settings |
+| [Detox](guide/detox.md) | Running Detox tests: setup, tags, what Baton generates, limits |
 | [CLI](guide/cli.md) | Every command, flag and exit code |
 | [MCP](guide/mcp.md) | Tools for AI agents |
 | [Menu bar app](guide/app.md) | Dashboard, Live viewer, logs, deep links, notifications |
@@ -164,7 +166,7 @@ New to Baton? Try it on one of the [examples](examples) first.
 
 ## Feedback and bugs
 
-[Open an issue](https://github.com/lmcjt37/baton-releases/issues/new). Include your macOS, Xcode and Maestro versions and the output of `baton status`.
+[Open an issue](https://github.com/lmcjt37/baton-releases/issues/new). Include your macOS, Xcode and Maestro (or Detox) versions and the output of `baton status`.
 
 ## Licence
 
