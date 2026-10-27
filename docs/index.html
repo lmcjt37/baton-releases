@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baton</title>
-  <meta name="description" content="Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.">
+  <meta name="description" content="Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.">
   <link rel="icon" type="image/png" href="baton.png">
   <meta property="og:title" content="Baton">
-  <meta property="og:description" content="Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.">
+  <meta property="og:description" content="Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.">
   <meta property="og:image" content="https://lmcjt37.github.io/baton-releases/baton.png">
   <script>document.documentElement.classList.add('js');</script>
   <style>
@@ -158,7 +158,7 @@
   <header>
     <img src="baton.png" alt="">
     <h1>Baton</h1>
-    <p class="tagline">Let your agents run Maestro and Detox tests on React Native apps in parallel, without tripping over each other.</p>
+    <p class="tagline">Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.</p>
     <ul class="chips" aria-label="Works with">
       <li>Maestro</li><li>Detox</li><li>iOS</li><li>Android</li><li>MCP for agents</li>
     </ul>
@@ -177,13 +177,15 @@
 
   <section>
     <p class="eyebrow">What it's for</p>
-    <h2>A visual test harness your agents can share</h2>
-    <p class="lede">Built after parallel agents running Maestro kept tripping over each other's port allocation and resources. Baton gives every worktree its own, queues the rest, and lets agents run Maestro or Detox tests with one MCP or CLI call, while you follow along in the dashboard.</p>
+    <h2>A harness for agents to drive your app</h2>
+    <p class="lede">Baton wraps the Maestro and Detox CLIs so agents can open your app on a simulator or emulator, step through it, and come back with results and screenshots, all from one MCP or CLI call. It was built after parallel agents kept tripping over each other's port allocation and resources, so every worktree gets its own and the rest wait their turn. You follow along in the dashboard.</p>
     <ul class="uses">
-      <li><strong>Validate changes</strong>Agents check their work on a real simulator or emulator before calling it done.</li>
-      <li><strong>Fix E2E tests</strong>Rerun failing tests, read the error and screenshots, and try again.</li>
-      <li><strong>Capture evidence</strong>Screenshots from every run, ready for a pull request or review.</li>
-      <li><strong>Not just for agents</strong>Run tests yourself from the terminal or the menu bar, queued fairly alongside your agents.</li>
+      <li><strong>Validation</strong>Check a change on a simulator or emulator before calling it done.</li>
+      <li><strong>Testing</strong>Run E2E suites, then rerun the failures until they pass.</li>
+      <li><strong>Auditing</strong>Walk through screens to review the UI and copy.</li>
+      <li><strong>Evidence</strong>Screenshots from every run, ready for a pull request or review.</li>
+      <li><strong>Reproducing bugs</strong>Script the steps to a bug and watch it happen on a device.</li>
+      <li><strong>Not just for agents</strong>Drive it yourself from the terminal or the menu bar, queued fairly alongside your agents.</li>
     </ul>
   </section>
 
