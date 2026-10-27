@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baton</title>
-  <meta name="description" content="Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.">
+  <meta name="description" content="Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.">
   <link rel="icon" type="image/png" href="baton.png">
   <meta property="og:title" content="Baton">
-  <meta property="og:description" content="Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.">
+  <meta property="og:description" content="Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.">
   <meta property="og:image" content="https://lmcjt37.github.io/baton-releases/baton.png">
   <style>
     :root {
@@ -85,6 +85,7 @@
     ul.features { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     ul.features li { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 15px; }
     ul.features strong { display: block; }
+    ul.features li.wide { grid-column: 1 / -1; }
     .links { display: flex; flex-wrap: wrap; gap: 8px; }
     .links a {
       padding: 8px 14px; border-radius: 999px; text-decoration: none;
@@ -111,7 +112,7 @@
   <header>
     <img src="baton.png" alt="">
     <h1>Baton</h1>
-    <p class="tagline">Run Maestro E2E flows for React Native apps from every git worktree at once, with no collisions.</p>
+    <p class="tagline">Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.</p>
 
     <div class="download">
       <a id="download" class="button" href="https://github.com/lmcjt37/baton-releases/releases/latest">Download for macOS</a>
@@ -156,7 +157,7 @@
     <h2>Get started</h2>
     <p>From your React Native project:</p>
     <div class="cmd"><span>baton init       <span class="c"># detect your project, write baton.config.ts</span>
-baton perform    <span class="c"># run your Maestro flows</span>
+baton perform    <span class="c"># run your Maestro flows or Detox tests</span>
 baton ui         <span class="c"># open the dashboard</span></span><button class="copy" type="button">Copy</button></div>
     <p>Let your AI agents run flows too:</p>
     <div class="cmd"><span>claude mcp add --scope user baton -- baton mcp</span><button class="copy" type="button">Copy</button></div>
@@ -165,6 +166,7 @@ baton ui         <span class="c"># open the dashboard</span></span><button class
   <section>
     <h2>Why Baton</h2>
     <ul class="features">
+      <li class="wide"><strong>Maestro or Detox</strong>Bring your Maestro flows or your Detox tests: tags, retries, flaky detection and Encore work the same for both, on iOS and Android.</li>
       <li><strong>A Metro per worktree</strong>Every worktree gets its own port, so no simulator loads another branch's code.</li>
       <li><strong>Its own devices</strong>Dedicated simulators and emulators, checked to load the right bundle before any flow runs.</li>
       <li><strong>Queued, not failed</strong>Runs wait for free devices instead of fighting over them.</li>
@@ -176,7 +178,7 @@ baton ui         <span class="c"># open the dashboard</span></span><button class
 
   <section>
     <h2>Requirements</h2>
-    <p class="muted">macOS with Xcode and an iOS simulator runtime · <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java · a bare React Native or Expo dev-client app · for Android, the Android SDK with an arm64 system image.</p>
+    <p class="muted">macOS with Xcode and an iOS simulator runtime · <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java, or <a href="https://wix.github.io/Detox/">Detox</a> 20 in your project (plus applesimutils for iOS) · a bare React Native or Expo dev-client app · for Android, the Android SDK with an arm64 system image.</p>
   </section>
 
   <section>
@@ -199,6 +201,7 @@ baton ui         <span class="c"># open the dashboard</span></span><button class
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/configuration.md">Configuration</a>
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/cli.md">CLI</a>
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/mcp.md">MCP</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/detox.md">Detox</a>
       <a href="https://github.com/lmcjt37/baton-releases/tree/main/examples">Examples</a>
       <a href="https://github.com/lmcjt37/baton-releases/issues">Issues</a>
     </div>
