@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baton</title>
-  <meta name="description" content="Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.">
+  <meta name="description" content="Let your agents drive iOS and Android apps through Maestro, Detox, XCUITest, Espresso and Compose, in parallel, without tripping over each other.">
   <link rel="icon" type="image/png" href="baton.png">
   <meta property="og:title" content="Baton">
-  <meta property="og:description" content="Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.">
+  <meta property="og:description" content="Let your agents drive iOS and Android apps through Maestro, Detox, XCUITest, Espresso and Compose, in parallel, without tripping over each other.">
   <meta property="og:image" content="https://lmcjt37.github.io/baton-releases/baton.png">
   <script>document.documentElement.classList.add('js');</script>
   <style>
@@ -158,9 +158,9 @@
   <header>
     <img src="baton.png" alt="">
     <h1>Baton</h1>
-    <p class="tagline">Let your agents drive React Native apps through Maestro and Detox, in parallel, without tripping over each other.</p>
+    <p class="tagline">Let your agents drive iOS and Android apps through Maestro, Detox, XCUITest, Espresso and Compose, in parallel, without tripping over each other.</p>
     <ul class="chips" aria-label="Works with">
-      <li>Maestro</li><li>Detox</li><li>iOS</li><li>Android</li><li>MCP for agents</li>
+      <li>Maestro</li><li>Detox</li><li>XCUITest</li><li>Espresso &amp; Compose</li><li>iOS</li><li>Android</li><li>MCP for agents</li>
     </ul>
 
     <div class="download">
@@ -178,7 +178,7 @@
   <section>
     <p class="eyebrow">What it's for</p>
     <h2>A harness for agents to drive your app</h2>
-    <p class="lede">Baton wraps the Maestro and Detox CLIs so agents can open your app on a simulator or emulator, step through it, and come back with results and screenshots, all from one MCP or CLI call. It was built after parallel agents kept tripping over each other's port allocation and resources, so every worktree gets its own and the rest wait their turn. You follow along in the dashboard.</p>
+    <p class="lede">Baton wraps Maestro, Detox, XCUITest and Android instrumentation (Espresso, Compose) so agents can open your app, native or React Native, on a simulator or emulator, step through it, and come back with results and screenshots, all from one MCP or CLI call. It was built after parallel agents kept tripping over each other's port allocation and resources, so every worktree gets its own and the rest wait their turn. You follow along in the dashboard.</p>
     <ul class="uses">
       <li><strong>Validation</strong>Check a change on a simulator or emulator before calling it done.</li>
       <li><strong>Testing</strong>Run E2E suites, then rerun the failures until they pass.</li>
@@ -205,12 +205,12 @@
 
   <section>
     <p class="eyebrow">How it works</p>
-    <h2>Every worktree gets its own Metro and its own devices</h2>
+    <h2>Every worktree gets its own devices, and its own Metro for React Native</h2>
     <div class="stage" role="img" aria-label="Three worktrees, each with its own Metro port and its own simulator or emulator">
       <div class="lane" style="--c: #0a84ff"><span class="node"><span class="dot"></span>main</span><span class="wire"></span><span class="node port">Metro :8082</span><span class="wire"></span><span class="node">iPhone<span class="long">&nbsp;simulator</span></span></div>
       <div class="lane" style="--c: #bf5af2"><span class="node"><span class="dot"></span>feat/checkout</span><span class="wire"></span><span class="node port">Metro :8083</span><span class="wire"></span><span class="node">iPhone<span class="long">&nbsp;simulator</span></span></div>
       <div class="lane" style="--c: #30d158"><span class="node"><span class="dot"></span>feat/onboarding</span><span class="wire"></span><span class="node port">Metro :8084</span><span class="wire"></span><span class="node">Android<span class="long">&nbsp;emulator</span></span></div>
-      <p class="note">Baton checks each app loaded its own branch before a test runs, and leaves <s>:8081</s> to you.</p>
+      <p class="note">Baton checks each React Native app loaded its own branch before a test runs, and leaves <s>:8081</s> to you. Native apps skip Metro and still get their own devices and builds.</p>
     </div>
   </section>
 
@@ -218,11 +218,11 @@
     <p class="eyebrow">Why Baton</p>
     <h2>Built for parallel work, by people and agents</h2>
     <ul class="features">
-      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9c0 5-12 3-12 8"/></svg></span><strong>A Metro per worktree</strong>Every worktree gets its own port, so no simulator loads another branch's code.</li>
-      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg></span><strong>Its own devices</strong>Dedicated simulators and emulators, checked to load the right bundle before any flow runs.</li>
+      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9c0 5-12 3-12 8"/></svg></span><strong>A Metro per worktree</strong>React Native worktrees get their own port, so no simulator loads another branch's code. Native apps need none.</li>
+      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18h2"/></svg></span><strong>Its own devices</strong>Dedicated simulators and emulators per worktree, so runs never share a device.</li>
       <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h11M4 18h7"/><path d="M17 15v3l2 1.5"/></svg></span><strong>Queued, not failed</strong>Runs wait for free devices instead of fighting over them.</li>
-      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span><strong>Built once</strong>App builds are cached by native fingerprint; JS-only branches never rebuild.</li>
-      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13.5h.01M14.5 13.5h.01"/></svg></span><strong>Agent-ready</strong>One MCP call runs the flows and returns results and screenshots.</li>
+      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span><strong>Built once</strong>App builds are cached by native fingerprint, so worktrees on the same native code share one, and JS-only branches never rebuild.</li>
+      <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13.5h.01M14.5 13.5h.01"/></svg></span><strong>Agent-ready</strong>One MCP call runs the tests and returns results, screenshots and failure videos.</li>
       <li><span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><strong>Watch it live</strong>A menu bar dashboard with progress, screenshots, logs and a live device grid.</li>
     </ul>
   </section>
@@ -268,17 +268,22 @@
   <section>
     <p class="eyebrow">Get started</p>
     <h2>Three commands to your first run</h2>
-    <p>From your React Native project:</p>
+    <p>From your iOS, Android or React Native project:</p>
     <div class="cmd"><span>baton init       <span class="c"># detect your project, write baton.config.ts</span>
-baton perform    <span class="c"># run your Maestro flows or Detox tests</span>
+baton perform    <span class="c"># run your Maestro flows, Detox, XCUITest or Espresso tests</span>
 baton ui         <span class="c"># open the dashboard</span></span><button class="copy" type="button">Copy</button></div>
-    <p>Let your AI agents run flows too:</p>
+    <p>Let your AI agents run tests too:</p>
     <div class="cmd"><span>claude mcp add --scope user baton -- baton mcp</span><button class="copy" type="button">Copy</button></div>
   </section>
 
   <section>
     <h2>Requirements</h2>
-    <p class="muted">macOS with Xcode and an iOS simulator runtime · <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java, or <a href="https://wix.github.io/Detox/">Detox</a> 20 in your project (plus applesimutils for iOS) · a bare React Native or Expo dev-client app · for Android, the Android SDK with an arm64 system image.</p>
+    <p class="muted">macOS with Xcode and an iOS simulator runtime · a native (Swift, Kotlin), bare React Native or Expo dev-client app · one of: <a href="https://maestro.mobile.dev">Maestro</a> 2.11+ and Java; <a href="https://wix.github.io/Detox/">Detox</a> 20 in your project (plus applesimutils for iOS); an XCUITest UI test target (Xcode 16+); Espresso or Compose tests with AndroidJUnitRunner · for Android, the Android SDK with an arm64 system image.</p>
+  </section>
+
+  <section>
+    <h2>Good to know</h2>
+    <p class="muted"><strong>Espresso and React Native don't mix:</strong> Espresso can't wait for React Native's JS thread, so Espresso tests of React Native screens need idling resources. Use Detox or Maestro for React Native apps; Compose UI tests are fine. See the <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/limitations.md">limitations</a> and <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/troubleshooting.md">troubleshooting</a> guides.</p>
   </section>
 
 
@@ -293,7 +298,11 @@ baton ui         <span class="c"># open the dashboard</span></span><button class
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/configuration.md">Configuration</a>
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/cli.md">CLI</a>
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/mcp.md">MCP</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/native.md">Native apps</a>
       <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/detox.md">Detox</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/xcuitest.md">XCUITest</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/instrumentation.md">Espresso &amp; Compose</a>
+      <a href="https://github.com/lmcjt37/baton-releases/blob/main/guide/troubleshooting.md">Troubleshooting</a>
       <a href="https://github.com/lmcjt37/baton-releases/tree/main/examples">Examples</a>
       <a href="https://github.com/lmcjt37/baton-releases/issues">Issues</a>
     </div>

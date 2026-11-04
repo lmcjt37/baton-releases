@@ -8,16 +8,16 @@
  baton ui ──────┘                              ├─ registry       ~/.baton/state.json
                                                ├─ scheduler      simulator and emulator budgets, FIFO
                                                ├─ port allocator Metro on 8082–8099 (never 8081)
-                                               ├─ runners        Maestro · Detox
+                                               ├─ runners        Maestro · Detox · XCUITest · instrumentation
                                                └─ adapters       simctl · emulator/adb · Metro
 ```
 
 For each worktree, Baton:
 
-1. starts **its own Metro** on a free port
-2. creates **its own simulators** (`baton-<stage>-N`) and points each one at that port through `RCT_jsLocation`, or, on Android, **its own emulators** (`baton-<stage>-aN`), pointed at it through the app's `debug_http_host`
-3. **checks** that every app really connects to *that* Metro before any flow runs
-4. runs the project's test runner, [Maestro](https://maestro.dev) or [Detox](detox.md), across the devices (sharded), streams progress, and saves screenshots and reports into the worktree
+1. builds the app, or takes it from the cache, by its native fingerprint
+2. creates **its own simulators** (`baton-<stage>-N`) or, on Android, **its own emulators** (`baton-<stage>-aN`)
+3. for a React Native app, starts **its own Metro** on a free port, points every device at it and **checks** that every app really connects to *that* Metro before any flow runs. A [native app](native.md) has no Metro, so these steps are skipped.
+4. runs the platform's test runner, [Maestro](https://maestro.dev), [Detox](detox.md), [XCUITest](xcuitest.md) or [instrumentation](instrumentation.md), across the devices (sharded), streams progress, and saves screenshots, videos and reports into the worktree
 
 Requests that arrive while the machine is full **wait in a queue instead of failing**. The daemon starts on first use and exits when it has been idle for a while.
 
@@ -25,9 +25,9 @@ Requests that arrive while the machine is full **wait in a queue instead of fail
 
 | Term | Meaning |
 |---|---|
-| **Stage** | One project in one worktree. A Stage owns one Metro port and a pool of simulators. |
+| **Stage** | One project in one worktree. A Stage owns a pool of simulators and emulators, and for React Native one Metro port. |
 | **Concert** | One test run on a Stage: a set of flows/tags plus an Act count. Concerts on one Stage run one after another. |
-| **Flow** | One test: a Maestro flow file, or a Detox test case (`it`). |
+| **Flow** | One test: a Maestro flow file, a Detox test case (`it`), or an XCUITest or instrumentation test method. |
 | **Act** | One shard of a Concert, running on one simulator ("Act 2/3"). |
 | **Programme** | A named, saved Concert preset in `baton.config.ts`, e.g. `baton perform smoke`. |
 | **Budget** | The machine-wide simulator limit (default 4), and a separate emulator limit (default 2). Concerts ask for N Acts and get as many as are free (at least 1). |
@@ -36,13 +36,13 @@ Requests that arrive while the machine is full **wait in a queue instead of fail
 
 ## Artifacts
 
-Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`.
+Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log; with XCUITest `xcodebuild.log`, each Act's result bundle and a video of each failure; with instrumentation `instrumentation.log`, each Act's logcat and failure videos. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`.
 
 Machine-wide state (the daemon socket, registry, cached builds, Baton's AVDs) lives in `~/.baton/`.
 
 ## Failures
 
-- **Infra failures** (boot, install, Metro dying, the bundle check) are retried automatically, and simulators are erased (emulators wiped) if they were the problem.
+- **Infra failures** (boot, install, Metro dying, the bundle check, a runner that produced no results) are retried automatically, and simulators are erased (emulators wiped) if they were the problem.
 - **Flow failures** are not retried unless you pass `-r N`; a flow that passes on a retry is reported as **flaky**.
 - **Bundle errors** fail the Concert straight away with Metro's error message, before any simulator boots.
 
