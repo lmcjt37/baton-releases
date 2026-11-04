@@ -1,0 +1,40 @@
+# Regenerate BatonNative.xcodeproj with `xcodegen generate` after editing this.
+name: BatonNative
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGNING_ALLOWED: "NO"
+    CODE_SIGN_IDENTITY: ""
+targets:
+  BatonNative:
+    type: application
+    platform: iOS
+    sources: [BatonNative]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.batonnative
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+  BatonNativeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [BatonNativeUITests]
+    dependencies:
+      - target: BatonNative
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.batonnative.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: BatonNative
+schemes:
+  BatonNative:
+    build:
+      targets:
+        BatonNative: all
+        BatonNativeUITests: [test]
+    test:
+      targets: [BatonNativeUITests]

@@ -14,7 +14,7 @@ export default {
       // fingerprint: { include: ['native-config'], exclude: ['ios/fastlane'] },
     },
   },
-  metro: { start: 'yarn start --port {port}' },     // {port} is filled in by Baton
+  metro: { start: 'yarn start --port {port}' },     // {port} is filled in by Baton; none for native apps
   // connect: 'devClient',                         // Expo dev-client apps; `baton init` sets this
   android: {                                        // optional: `baton perform --platform android`
     applicationId: 'com.example.app',
@@ -22,13 +22,14 @@ export default {
       build: {                                      // or: path: 'android/app/build/…/app-debug.apk'
         command: 'cd android && ./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a',
         output: 'android/app/build/outputs/apk/debug/app-debug.apk',
-        // testOutput: '…/apk/androidTest/debug/app-debug-androidTest.apk', // Detox only (or testPath with path)
+        // testOutput: '…/apk/androidTest/debug/app-debug-androidTest.apk', // Detox and instrumentation (or testPath with path)
       },
     },
     // emulator: { systemImage: 'system-images;android-36;google_apis;arm64-v8a' }, // default: newest arm64 image
     env: { APP_ID: 'com.example.app' },             // layered over `env` for Android Concerts
   },
   // runner: 'detox',                               // default 'maestro'; see "Test runners"
+  // ios: { runner: 'xcuitest' },                  // per platform; android.runner: 'instrumentation'
   flowsDir: '.maestro',                              // default: .maestro (Maestro) or e2e (Detox)
   // maestro: { args: [...] },                     // extra `maestro test` args (detox: { args } for Detox)
   simulator: { deviceType: 'iPhone 17', runtime: 'iOS-26-5' },
@@ -47,7 +48,7 @@ export default {
   hooks: {
     beforeMetro: 'yarn codegen',                      // e.g. generate gitignored sources
     beforeAct: async ({ worktree, udid }) => { /* per-simulator setup, e.g. fixtures */ },
-    // For --affected runs: map changed files to flows. Return { flows } (exact files) or { tags }.
+    // For --affected runs: map changed files to flows. Return { flows } (exact files), { tests } (test ids) or { tags }.
     selectFlows: ({ changedFiles }) =>
       changedFiles.some(f => f.startsWith('src/checkout/')) ? { tags: ['checkout'] } : {},
   },
@@ -62,33 +63,43 @@ export default {
 
 ## The app build
 
-When `baton init` finds an Xcode workspace, it configures **`app.build`**. Baton then builds the simulator app itself whenever the worktree's **native fingerprint** has no cached build: `ios/`, native dependency versions, `patches/`, the build command and the Xcode version. Builds are cached in `~/.baton/binaries/`, so worktrees with the same native code share one, and JS-only branches never rebuild.
+When `baton init` finds an Xcode workspace or project, it configures **`app.build`**. Baton then builds the simulator app itself whenever the worktree's **native fingerprint** has no cached build: `ios/`, native dependency versions, `patches/`, the build command and the Xcode version. Builds are cached in `~/.baton/binaries/`, so worktrees with the same native code share one, and JS-only branches never rebuild.
 
-If you'd rather build yourself, set `app.path` to a prebuilt Debug simulator `.app` instead. A build from Xcode works, and `init` also searches Xcode's DerivedData.
+If you'd rather build yourself, set `app.path` to a prebuilt Debug simulator `.app` instead. A build from Xcode works, and `init` also searches Xcode's DerivedData. XCUITest also needs the `.xctestrun` that `build-for-testing` writes: `app.build.xctestrun` (a glob works) or, with `app.path`, `app.xctestrun`.
+
+**Android only:** with an `android` block, leave out `bundleId` and `app`. The project then runs on Android without `--platform android`.
 
 Each Concert's `build.log` and the dashboard's **Details** show where the build ran (DerivedData), where it wrote the app, and Baton's cached copy.
 
 ## Env
 
-**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Values declared in config, programmes or runs are passed to Maestro as `-e`. Detox tests read them from `process.env`.
+**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Values declared in config, programmes or runs are passed to Maestro as `-e`. Detox tests read them from `process.env`, XCUITest tests from their environment (`ProcessInfo.processInfo.environment`) and instrumentation tests from `InstrumentationRegistry.getArguments()`.
 
 **Functions and hooks** run in a child process per Concert, with the worktree as its working directory. A hang or crash in your code affects only that Concert, never the daemon.
 
 ## Test runners
 
-`runner` picks the project's test runner: `'maestro'` (default) or `'detox'`. One runner per project. Baton calls each test a **flow**: a Maestro flow file, or a Detox test case (`it`).
+`runner` picks the project's test runner: `'maestro'` (default) or `'detox'`. `ios.runner` and `android.runner` override it per platform (see below). Baton calls each test a **flow**: a Maestro flow file, a Detox test case (`it`), or an XCUITest or instrumentation test method.
 
 **Args.** `maestro.args` or `detox.args` are added to every run's command, then the programme's `args`. Baton rejects flags it sets itself (such as Maestro's `--shard-split` or Detox's `-c`). Detox passes args through a shell, so each Detox arg must be one word: put a flag and its value in separate strings.
+
+**Per platform.** `ios.runner: 'xcuitest'` runs a native app's XCUITest UI tests on iOS, and `android.runner: 'instrumentation'` its Espresso or Compose tests on Android; `runner` stays the default for the other platform. These tests are chosen by id (`--test AppUITests/LoginTests`, `--test com.example.LoginTests`, a programme's `tests`) rather than flow files. XCUITest tags are `_<tag>_` in test names; instrumentation tags are annotations. Setup and artifacts: [XCUITest](xcuitest.md), [Android instrumentation](instrumentation.md).
 
 **Detox** (iOS and Android). Baton extends your Detox config with its own device, the cached app build and the Stage's Metro, and splits test files across Acts. Tags are `#words` in test names (`it('signs in #smoke', …)`), and tests read env from `process.env`. On Android, the build also makes Detox's test APK (`android.app.build.testOutput`). Setup, what Baton generates and limits: [Detox](detox.md).
 
 ## Affected runs
 
-`--affected`, MCP `affected: true`, or **Affected flows** in the dashboard pass `hooks.selectFlows` every file the worktree has changed: committed since its merge-base with the base branch, **plus uncommitted and untracked work**. Paths are relative to the project root. If nothing is affected, the Concert finishes as **skipped**: nothing boots and it exits 0.
+`--affected`, MCP `affected: true`, or **Affected flows** in the dashboard pass `hooks.selectFlows` every file the worktree has changed: committed since its merge-base with the base branch, **plus uncommitted and untracked work**. Paths are relative to the project root. It also gets the Concert's `platform`. Return `{ flows }` (flow files), `{ tests }` (test ids, for XCUITest and instrumentation) or `{ tags }`. If nothing is affected, the Concert finishes as **skipped**: nothing boots and it exits 0.
+
+## Native apps (no Metro)
+
+A project with no `metro` block and no `react-native` or `expo` dependency is **native**: Baton starts no Metro, skips the bundle check and writes nothing into the app, and each worktree still gets its own devices and its own cached build. Run Maestro flows, XCUITest or instrumentation tests against a Swift/Kotlin app this way; see [Native apps](native.md). `baton init` puts the config in the nearest React Native project, else the nearest folder holding `ios/` or `android/` projects, else the nearest Xcode project or workspace, or Gradle build.
+
+A native build's fingerprint covers the whole project root (minus build output, the other platform's `ios/` or `android/` folder, `.git`, `.maestro` and `baton.config.ts`), since native source can live anywhere. Trim it with `app.build.fingerprint.exclude`. Native branches rebuild more often than React Native ones, so consider raising `maxBuilds` in the machine config.
 
 ## Android
 
-Android shares Metro, flows, hooks and programmes with iOS; only the app, its id and env overrides differ. Hooks and dynamic env values get `platform`, and on Android `udid` is the emulator's adb serial.
+Android shares Metro, flows, hooks and programmes with iOS; only the app, its id, its runner and env overrides differ. Hooks and dynamic env values get `platform`, and on Android `udid` is the emulator's adb serial.
 
 Baton creates its emulators in its own AVD folder (`~/.baton/avd`), headless, on console ports from 5600, so your own AVDs and emulators are never touched. It installs the APK with every runtime permission granted. Each emulator's network goes through its own proxy in Baton, which sends the app's default dev server, `10.0.2.2:8081`, to the Stage's Metro. Nothing is written into the app, so `clearState` flows keep loading the right bundle and one build serves every worktree. Keep the app on the default dev server (no custom host or port). Emulators run without virtual Wi-Fi, so the guest sees a cellular connection.
 
@@ -115,6 +126,7 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 | `daemonIdleMs` | 1 minute | How long an idle daemon keeps running |
 | `infraRetries` | 2 | Automatic retries for infra failures |
 | `bundleCheckTimeoutMs` | 90 seconds | How long the app has to connect to its Metro |
-| `stallMs` | 5 minutes | Stop the test runner (Maestro or Detox) when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off). Was `maestroStallMs` before 2.0 |
+| `stallMs` | 5 minutes | Stop the test runner when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off). Was `maestroStallMs` before 2.0 |
 | `binaryCacheGb` | 10 | Size cap for cached app builds |
+| `maxBuilds` | 1 | App builds that may run at once across Stages; raise it for native projects, whose branches rebuild often |
 | `emulatorSnapshots` | `true` | Boot emulators from a snapshot (~2 GB of disk per emulator) |

@@ -17,6 +17,7 @@
 | Android | Emulators per Stage in a Baton-owned AVD home, their own budget, APK builds in the binary cache, bundle check, Live view, `--platform android` everywhere | ✅ |
 | Android follow-ups | A Metro proxy per emulator (`clearState`-safe, one build for every Stage), Expo dev clients, snapshot boots | ✅ |
 | Test runners | Maestro behind a `Runner` interface, then Detox on iOS and Android: tags in test names, retries per test, test APK builds, `init` detection and setup warnings | ✅ |
+| Native apps | Metro optional, native project roots, per-platform runners: XCUITest (build-for-testing, failure videos) and Android instrumentation (Espresso, Compose, Orchestrator), `init` detection, Android-only configs | ✅ |
 | Donations | A dismissable "buy me a coffee" window at launch, plus a menu item; Baton stays free | ✅ |
 | Distribution | Signed, notarised universal releases on `lmcjt37/baton-releases`, auto-update, and a Homebrew cask (`lmcjt37/tap/baton`) | ✅ |
 

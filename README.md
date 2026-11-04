@@ -5,7 +5,7 @@
 <h1 align="center">Baton</h1>
 
 <p align="center">
-  <strong>Run Maestro or Detox E2E tests for React Native apps from every git worktree at once, with no collisions.</strong>
+  <strong>Run mobile E2E tests (Maestro, Detox, XCUITest, Espresso, Compose) for iOS, Android and React Native apps from every git worktree at once, with no collisions.</strong>
 </p>
 
 <p align="center">
@@ -25,17 +25,17 @@ This is the public home for Baton's **releases**, **documentation**, **examples*
 
 ## Why Baton
 
-Several worktrees, each with a human or an AI agent on its own branch, all want to run E2E tests. On one Mac they get in each other's way: every dev build loads JS from Metro on `:8081`, so one worktree can serve *its* code to every simulator; two runs on one simulator break each other; and too many simulators stall the machine.
+Several worktrees, each with a human or an AI agent on its own branch, all want to run E2E tests. On one Mac they get in each other's way: two runs on one simulator break each other; every React Native dev build loads JS from Metro on `:8081`, so one worktree can serve *its* code to every simulator; and too many simulators stall the machine.
 
-Baton gives each worktree its own Metro, its own simulators and emulators, and a fair place in the queue:
+Baton runs Maestro flows, Detox, XCUITest and Android instrumentation (Espresso, Compose) tests, for native iOS and Android apps and React Native. It gives each worktree its own simulators and emulators, its own cached build, its own Metro for React Native, and a fair place in the queue:
 
-- a **separate Metro per worktree** on its own port (never 8081)
-- **dedicated simulators or emulators**, each pointed at that Metro
-- a **bundle check** proving every app loaded the right code before any flow runs
-- a **queue** when the machine is full, and flows **sharded** across devices
-- app builds **cached by native fingerprint**, so JS-only branches never rebuild
-- screenshots and reports saved in the worktree, and a **live menu bar dashboard**
-- an **MCP server**, so agents run flows with one call and get results and screenshots back
+- **dedicated simulators or emulators** per worktree
+- app builds **cached by native fingerprint**, so worktrees on the same native code share one, and JS-only branches never rebuild
+- for React Native, a **separate Metro per worktree** on its own port (never 8081), and a **bundle check** proving every app loaded the right code before any test runs
+- a **queue** when the machine is full, and tests **sharded** across devices
+- retries that spot **flaky** tests, and **Encore** to rerun just the failures
+- screenshots, failure videos and reports saved in the worktree, and a **live menu bar dashboard**
+- an **MCP server**, so agents run tests with one call and get results and screenshots back
 
 ## Requirements
 
@@ -45,7 +45,9 @@ Baton gives each worktree its own Metro, its own simulators and emulators, and a
 | *Maestro projects:* [Maestro CLI](https://maestro.mobile.dev) | **2.11.0** | 2.11.0 |
 | *Maestro projects:* Java | `JAVA_HOME` set, or `java` on PATH | |
 | *Detox projects:* [Detox](https://wix.github.io/Detox/) in the project, and `applesimutils` for iOS | Detox 20 | Detox 20.51, Jest 29 |
-| React Native app | bare RN using Metro, or Expo with `expo-dev-client` | RN 0.83, 0.86 (Expo SDK 57), 0.87 |
+| *XCUITest projects:* a UI Testing target (XCTest) | Xcode 16 | Xcode 26.5 |
+| *Instrumentation projects:* `AndroidJUnitRunner` with Espresso or Compose UI tests | not yet established | Espresso 3.7, Compose BOM 2026.06 |
+| App | native (Swift, Kotlin), bare RN using Metro, or Expo with `expo-dev-client` | RN 0.83, 0.86 (Expo SDK 57), 0.87 |
 | *Android only:* Android SDK with the emulator and an arm64 system image | Android Studio's SDK (`ANDROID_HOME`, or `~/Library/Android/sdk`) | emulator 36.5, Android 17 (API 37) |
 
 Baton.app bundles its own Node; you don't need Node installed.
@@ -124,11 +126,11 @@ Either way, each project keeps its `baton.config.ts` and its `.baton/` folder of
 
 ## Getting started
 
-From your React Native project:
+From your iOS, Android or React Native project:
 
 ```sh
-baton init       # detects your app, build, Metro, flows and simulator; writes baton.config.ts
-baton perform    # runs your flows
+baton init       # detects your app, build, test runner, Metro (React Native) and simulator; writes baton.config.ts
+baton perform    # runs your tests
 baton ui         # opens the dashboard
 ```
 
@@ -150,11 +152,15 @@ New to Baton? Try it on one of the [examples](examples) first.
 |---|---|
 | [How Baton works](guide/concepts.md) | Stages, Concerts, Acts and Programmes; artifacts; how failures are handled |
 | [Configuration](guide/configuration.md) | `baton.config.ts`, app builds, env, test runners, affected runs, Android, machine settings |
+| [Native apps](guide/native.md) | Swift and Kotlin apps without React Native: picking runners, `init`, Android-only, Maestro with Compose |
 | [Detox](guide/detox.md) | Running Detox tests: setup, tags, what Baton generates, limits |
+| [XCUITest](guide/xcuitest.md) | Running XCUITest UI tests: setup, choosing tests and tags, failure videos |
+| [Android instrumentation](guide/instrumentation.md) | Running Espresso and Compose tests: setup, choosing tests, failure videos, Orchestrator |
 | [CLI](guide/cli.md) | Every command, flag and exit code |
 | [MCP](guide/mcp.md) | Tools for AI agents |
 | [Menu bar app](guide/app.md) | Dashboard, Live viewer, logs, deep links, notifications |
-| [Limitations](guide/limitations.md) | What isn't supported yet |
+| [Troubleshooting](guide/troubleshooting.md) | Common symptoms and fixes, by runner |
+| [Limitations](guide/limitations.md) | What isn't supported yet, including Espresso with React Native |
 | [Roadmap](guide/roadmap.md) | What Baton does today and what's next |
 
 ## Examples
@@ -163,10 +169,11 @@ New to Baton? Try it on one of the [examples](examples) first.
 |---|---|
 | [bare-rn](examples/bare-rn) | Bare React Native, iOS and Android |
 | [expo-dev-client](examples/expo-dev-client) | Expo development build, iOS and Android |
+| [native](examples/native) | SwiftUI with XCUITest, Kotlin with Compose and Espresso; no React Native |
 
 ## Feedback and bugs
 
-[Open an issue](https://github.com/lmcjt37/baton-releases/issues/new). Include your macOS, Xcode and Maestro (or Detox) versions and the output of `baton status`.
+[Open an issue](https://github.com/lmcjt37/baton-releases/issues/new). Include your macOS and Xcode versions, your test runner and its version, and the output of `baton status`.
 
 ## Licence
 

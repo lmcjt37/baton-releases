@@ -1,0 +1,11 @@
+.DS_Store
+.baton/
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+# Android
+.gradle/
+.kotlin/
+.idea/
+local.properties

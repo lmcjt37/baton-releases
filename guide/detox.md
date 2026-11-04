@@ -76,7 +76,7 @@ When a run fails before any test reports, the error and its hint name the cause:
 | Missing Detox setup, instrumentation or `DetoxTest` (Android) | Add the Android test setup above, then perform again (the native fingerprint changes, so Baton rebuilds) |
 | Detox on Android needs a test APK | Set `android.app.build.testOutput` (or `android.app.testPath`) |
 
-Each Concert's `detox.log` (**Logs** in the dashboard, `baton logs <id>`) has Detox's full output.
+Each Concert's `detox.log` (**Logs** in the dashboard, `baton logs <id>`) has Detox's full output. More symptoms and fixes: [Troubleshooting](troubleshooting.md).
 
 ## Limits
 
