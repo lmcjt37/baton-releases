@@ -24,7 +24,7 @@ For a project with no `react-native` or `expo` dependency, `init` finds:
 
 - **iOS:** the Xcode workspace or project at the root or in `ios/` (or an xcodegen `project.yml`, adding `xcodegen generate` when the `.xcodeproj` isn't committed, and `pod install` when there's a Podfile), the app's scheme and bundle id. With a **UI Testing** target, it sets `ios.runner: 'xcuitest'` and builds with `build-for-testing`.
 - **Android:** the Gradle app module and its `applicationId`. With tests in `src/androidTest`, it sets `android.runner: 'instrumentation'` and also builds the test APK.
-- **Maestro flows** in `.maestro/` (or `maestro/`, `e2e/`) win over native tests, so Maestro projects keep working; `init` says how to switch.
+- **Maestro flows** in `.maestro/` (or `maestro/`, `e2e/maestro/`, `e2e/`, when it holds YAML) win over native tests, so Maestro projects keep working; `init` says how to switch.
 
 A config for both platforms looks like this:
 
@@ -67,13 +67,13 @@ baton perform -p android --test com.example.app.LoginTest#signsIn
 ```
 
 - **Tests are ids:** `Target/Class/method` for XCUITest and `package.Class#method` for instrumentation. A class or target runs everything in it.
-- **Tags:** `_smoke_` in an XCUITest name (`test_smoke_signsIn`); an annotation on Android (`instrumentation.tags` gives it a short name).
-- **Params:** `env` (and `-e K=V`) reaches XCUITest tests as environment variables (`ProcessInfo.processInfo.environment`) and instrumentation tests as arguments (`InstrumentationRegistry.getArguments()`). Neither reaches the app; pass what it needs through `XCUIApplication().launchEnvironment` or an intent extra.
+- **Tags:** `_smoke_` in an XCUITest name (`test_smoke_signsIn`); an annotation on Android (`instrumentation.tags` gives it a short name). A programme's tags must suit both platforms' runners, or the config doesn't load: `tags: ['smoke']` needs `instrumentation.tags.smoke`, and a dotted annotation name like `com.example.Smoke` isn't a valid XCUITest tag (give it a short name).
+- **Params:** `env`, a programme's `env` and `-e K=V` (not `envFiles`) reach XCUITest tests as environment variables (`ProcessInfo.processInfo.environment`) and instrumentation tests as arguments (`InstrumentationRegistry.getArguments()`). Neither reaches the app; pass what it needs through `XCUIApplication().launchEnvironment` or an intent extra.
 - **Affected runs:** `hooks.selectFlows` gets the Concert's `platform` and can return `{ tests: [...] }`, since test ids differ per platform.
 
 ## Builds
 
-A native build's fingerprint covers the whole project root (minus build output, the other platform's folder, `.git`, `.maestro` and `baton.config.ts`), since native source can live anywhere. Native branches rebuild more often than React Native ones, so consider raising `maxBuilds` in `~/.baton/config.json`. Each Stage builds into its own DerivedData (and Gradle builds in the worktree), so rebuilds are incremental, but a worktree's first build is a clean one: as long as your app's clean build takes. Worktrees on the same native code share one cached build.
+A native build's fingerprint covers the whole project root, since native source can live anywhere, so editing tests rebuilds too. It leaves out build output (`build`, `DerivedData`, `Pods`, `.gradle` and the like), the other platform's folder, `node_modules`, `.git`, `.github`, `.vscode`, `.baton`, `.maestro` and `baton.config.ts`, and adds the build command and toolchain (Xcode, or the JDK for Android). Native branches rebuild more often than React Native ones, so consider raising `maxBuilds` in `~/.baton/config.json`. Each Stage builds into its own DerivedData (and Gradle builds in the worktree), so rebuilds are incremental, but a worktree's first build is a clean one: as long as your app's clean build takes. Worktrees on the same native code share one cached build.
 
 ## Maestro and Compose
 

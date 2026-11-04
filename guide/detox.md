@@ -10,7 +10,7 @@ Baton runs [Detox](https://wix.github.io/Detox/) tests with everything it gives 
    - Detox's maven repository in `android/build.gradle` (`allprojects.repositories`)
    - in `android/app/build.gradle`: `testBuildType`, `testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"` and `androidTestImplementation("com.wix:detox:+")`
    - `DetoxTest.java` (or `.kt`) in `android/app/src/androidTest/…`
-4. **`baton init`** finds the Detox config and writes `runner: 'detox'`. It warns about anything missing from the list above, as do the dashboard's Perform form and MCP `baton_project`.
+4. **`baton init`** finds the Detox config (or a `detox` block or dependency in `package.json`) and writes `runner: 'detox'`, unless the project also has Maestro flows or uses `expo-dev-client`; then it keeps Maestro and says so. It warns about anything missing from the list above, as do the dashboard's Perform form and MCP `baton_project`.
 
 ```ts
 export default {
@@ -37,11 +37,18 @@ export default {
 
 Your Detox config keeps its own `apps`, `devices` and `configurations` for running Detox yourself; Baton doesn't use them.
 
+**Jest config:** Baton wraps the Jest config your Detox config names in `testRunner.args.config` (as the example does), else `jest.config.js`, `.cjs` or `.json` at the root, else `package.json`'s `jest`. A root `jest.config.ts` or `.mjs` isn't found unless the Detox config points at it.
+
+## Choosing tests
+
+- **Tests are files:** pass test files or folders with `--flow` (repeatable), MCP `flows`, or a programme's `flows`; `hooks.selectFlows` returns `{ flows: [...] }`. With none, everything in `flowsDir` (default `e2e`) runs. `--test` is for XCUITest and instrumentation only.
+- **Folders** are expanded with your Jest config's `testMatch` (`jest --listTests`), else to `*.test.*`, `*.spec.*` and `*.e2e.*` files.
+
 ## Writing tests
 
 - **One flow is one test** (`it`). Baton's results, retries and Encore work per test.
-- **Tags are `#words` in test names.** `tags: ['smoke']` runs `it('signs in #smoke', …)`; `excludeTags` skips them. Tags must be single words.
-- **Env** from `baton.config.ts` (`env`, `envFiles`, programme and per-run values) reaches tests as `process.env`.
+- **Tags are `#words` in test names.** `tags: ['smoke']` runs `it('signs in #smoke', …)`; `excludeTags` skips them. Tags are letters, digits, `-` and `_`.
+- **Env** from `baton.config.ts` (`env`, `envFiles`, `~/.baton/env`, programme and per-run values) reaches tests as `process.env`.
 - **Launch the app with `device.launchApp()`.** `newInstance`, `resetAppState` and `delete` all keep loading the Stage's bundle.
 - **Screenshots:** Baton keeps the failure screenshot and every `device.takeScreenshot()`, even when the test passes.
 
@@ -75,6 +82,7 @@ When a run fails before any test reports, the error and its hint name the cause:
 | Detox framework cache | `npx detox clean-framework-cache && npx detox build-framework-cache` |
 | Missing Detox setup, instrumentation or `DetoxTest` (Android) | Add the Android test setup above, then perform again (the native fingerprint changes, so Baton rebuilds) |
 | Detox on Android needs a test APK | Set `android.app.build.testOutput` (or `android.app.testPath`) |
+| Detox's device registry may be stale | `npx detox reset-lock-file`, only while no other Detox run is going |
 
 Each Concert's `detox.log` (**Logs** in the dashboard, `baton logs <id>`) has Detox's full output. More symptoms and fixes: [Troubleshooting](troubleshooting.md).
 
@@ -82,6 +90,7 @@ Each Concert's `detox.log` (**Logs** in the dashboard, `baton logs <id>`) has De
 
 - **No Expo dev clients** (`connect: 'devClient'`) with Detox yet.
 - **No total while running.** Jest only knows test files up front, so the dashboard counts tests as they finish, without a total.
-- **Retries rerun whole files.** Detox can't start mid-file, so a retry reruns each failed test's file, counting only the failed tests' results. Long files make retries slow. An Encore reruns the failed tests' files in full, including their other tests.
+- **Retries reload whole files.** A retry runs only the failed tests, but Detox starts at the top of their file, so its `beforeAll` hooks run again. An Encore reruns the failed tests' files in full, including their other tests.
+- **No videos.** Baton keeps screenshots and device logs, not Detox's video recordings.
 - **One runner per project.** A project with Maestro flows and Detox tests picks one with `runner`.
 - **Detox supports a range of React Native versions.** Newer ones often work (the example runs RN 0.87), but Baton can't fix a Detox incompatibility.

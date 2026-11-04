@@ -15,6 +15,6 @@ npm install
 baton perform smoke
 ```
 
-**See the isolation for yourself:** copy an example, change `MARKER` in the copy's `App.tsx` and `EXPECTED_MARKER` in its `baton.config.ts`, then run `baton perform smoke` in both folders at once. Each run passes only if its own simulators show its own code.
+**See the isolation for yourself:** copy an example, change `MARKER` in the copy's `App.tsx` and `EXPECTED_MARKER` in its `baton.config.ts`, then run `baton perform smoke` in both folders at once. Each run passes only if its own simulators show its own code. For the native example, see [its README](native/README.md).
 
 **See failures, flaky flows and Encore:** in `bare-rn`, run `baton perform demo`, then `baton encore <id>`. See its [README](bare-rn/README.md#failures-retries-and-encore), [bare-rn-detox's](bare-rn-detox/README.md#failures-retries-and-encore) for Detox, or [native's](native/README.md#failures-retries-and-encore) for XCUITest and instrumentation.

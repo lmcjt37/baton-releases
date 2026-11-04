@@ -32,8 +32,8 @@ export default {
   // ios: { runner: 'xcuitest' },                  // per platform; android.runner: 'instrumentation'
   flowsDir: '.maestro',                              // default: .maestro (Maestro) or e2e (Detox)
   // maestro: { args: [...] },                     // extra `maestro test` args (detox: { args } for Detox)
-  simulator: { deviceType: 'iPhone 17', runtime: 'iOS-26-5' },
-  defaultActs: 2,
+  simulator: { deviceType: 'iPhone 17', runtime: 'iOS-26-5' }, // default: the newest iOS runtime and an iPhone it supports
+  defaultActs: 2,                                    // default 1
 
   envFiles: ['.env.local'],
   env: {
@@ -48,11 +48,11 @@ export default {
   hooks: {
     beforeMetro: 'yarn codegen',                      // e.g. generate gitignored sources
     beforeAct: async ({ worktree, udid }) => { /* per-simulator setup, e.g. fixtures */ },
-    // For --affected runs: map changed files to flows. Return { flows } (exact files), { tests } (test ids) or { tags }.
+    // For --affected runs: map changed files to flows. Return { flows } (exact files), { tests } (test ids), { tags } or { excludeTags }.
     selectFlows: ({ changedFiles }) =>
       changedFiles.some(f => f.startsWith('src/checkout/')) ? { tags: ['checkout'] } : {},
   },
-  affected: { base: 'origin/main' },                  // optional; defaults to origin/main, then main
+  affected: { base: 'origin/main' },                  // optional; defaults to origin/main, main, origin/master, then master
 
   programmes: {
     smoke: { tags: ['smoke'], acts: 2, env: { ENVIRONMENT: 'staging' } },
@@ -61,9 +61,25 @@ export default {
 };
 ```
 
+## Programmes
+
+A programme is a named set of options for `baton perform <name>`. Each field is optional:
+
+| Field | |
+|---|---|
+| `flows` | Flow files or folders (Maestro, Detox) |
+| `tests` | Test ids or classes (XCUITest, instrumentation) |
+| `tags`, `excludeTags` | Run flows with any of `tags`, skip those with any of `excludeTags` |
+| `acts` | Acts to split across (default `defaultActs`) |
+| `retries` | Retries for failed flows (default 0) |
+| `env` | Env for this programme, over `env` |
+| `args` | Runner args, after `maestro.args` or `detox.args` |
+
 ## The app build
 
-When `baton init` finds an Xcode workspace or project, it configures **`app.build`**. Baton then builds the simulator app itself whenever the worktree's **native fingerprint** has no cached build: `ios/`, native dependency versions, `patches/`, the build command and the Xcode version. Builds are cached in `~/.baton/binaries/`, so worktrees with the same native code share one, and JS-only branches never rebuild.
+When `baton init` finds an Xcode workspace or project, it configures **`app.build`**. Baton then builds the simulator app itself whenever the worktree's **native fingerprint** has no cached build: `ios/` (`android/` for Android), native dependency versions, `patches/`, `app.json`, `app.config.js`/`.ts`, `react-native.config.js`, any `fingerprint.include` paths, the build command and the toolchain (the Xcode version, or the JDK for Android). Builds are cached in `~/.baton/binaries/`, so worktrees with the same native code share one, and JS-only branches never rebuild.
+
+**`{derivedData}`** in `command` and `output` becomes a DerivedData folder of the Stage's own (`~/.baton/derived/<stage>`), so its rebuilds are incremental. Baton empties it after a failed build.
 
 If you'd rather build yourself, set `app.path` to a prebuilt Debug simulator `.app` instead. A build from Xcode works, and `init` also searches Xcode's DerivedData. XCUITest also needs the `.xctestrun` that `build-for-testing` writes: `app.build.xctestrun` (a glob works) or, with `app.path`, `app.xctestrun`.
 
@@ -71,11 +87,19 @@ If you'd rather build yourself, set `app.path` to a prebuilt Debug simulator `.a
 
 Each Concert's `build.log` and the dashboard's **Details** show where the build ran (DerivedData), where it wrote the app, and Baton's cached copy.
 
+## Metro
+
+`metro.start` defaults to `npx react-native start --port {port}`; Metro also gets `RCT_METRO_PORT`. `metro.entry` (default `index`) is the bundle Baton builds before the app launches, and `metro.readyTimeoutMs` (default 2 minutes) is how long Metro has to start. A Stage's Metro runs until it's idle for `metroIdleMs`, and its log is `~/.baton/logs/metro-<stage>.log` (`baton logs --stage <id|path>`).
+
 ## Env
 
-**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Values declared in config, programmes or runs are passed to Maestro as `-e`. Detox tests read them from `process.env`, XCUITest tests from their environment (`ProcessInfo.processInfo.environment`) and instrumentation tests from `InstrumentationRegistry.getArguments()`.
+**Load order** (later wins): `~/.baton/env` → `envFiles` → `env` strings → programme `env` → per-run `-e K=V` → `exec`/function values. Everything reaches the Concert's processes (the build, Metro, Maestro, Detox). Only values declared in `env`, a programme or `-e` are passed to the tests themselves: to Maestro as `-e`, to XCUITest tests as their environment (`ProcessInfo.processInfo.environment`) and to instrumentation tests as `InstrumentationRegistry.getArguments()`. Detox tests read everything from `process.env`.
 
-**Functions and hooks** run in a child process per Concert, with the worktree as its working directory. A hang or crash in your code affects only that Concert, never the daemon.
+**`exec` and function values** are worked out per Act, once its device is ready, so they reach `beforeAct` and the tests, not the build or Metro. A Stage's Metro keeps the env of the Concert that started it, so a later Concert's programme `env` or `-e` doesn't reach it.
+
+**Functions and hooks** run in a child process per Concert, with the worktree as its working directory. A hang or crash in your code affects only that Concert, never the daemon. That process has only basic shell variables (`PATH`, `HOME`, `JAVA_HOME` and the like), not `~/.baton/env`, `envFiles` or `env`; functions get the Concert's env as `ctx.concert.env`.
+
+**String hooks** and `{ exec }` hooks fill in `{worktree}`, `{stageId}` and `{platform}`, plus `{port}` (Metro's) and, for `beforeAct`, `{udid}` and `{actIndex}`. `hooks.selectFlows` can also be `{ exec }` printing JSON.
 
 ## Test runners
 
@@ -95,7 +119,7 @@ Each Concert's `build.log` and the dashboard's **Details** show where the build 
 
 A project with no `metro` block and no `react-native` or `expo` dependency is **native**: Baton starts no Metro, skips the bundle check and writes nothing into the app, and each worktree still gets its own devices and its own cached build. Run Maestro flows, XCUITest or instrumentation tests against a Swift/Kotlin app this way; see [Native apps](native.md). `baton init` puts the config in the nearest React Native project, else the nearest folder holding `ios/` or `android/` projects, else the nearest Xcode project or workspace, or Gradle build.
 
-A native build's fingerprint covers the whole project root (minus build output, the other platform's `ios/` or `android/` folder, `.git`, `.maestro` and `baton.config.ts`), since native source can live anywhere. Trim it with `app.build.fingerprint.exclude`. Native branches rebuild more often than React Native ones, so consider raising `maxBuilds` in the machine config.
+A native build's fingerprint covers the whole project root (minus build output, the other platform's `ios/` or `android/` folder, `node_modules`, `.git`, `.github`, `.vscode`, `.baton`, `.maestro` and `baton.config.ts`), since native source can live anywhere. Trim it with `app.build.fingerprint.exclude`. Native branches rebuild more often than React Native ones, so consider raising `maxBuilds` in the machine config.
 
 ## Android
 
@@ -119,7 +143,7 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 |---|---|---|
 | `maxSimulators` | 4 | Simulator budget |
 | `maxEmulators` | 2 | Emulator budget (each takes about 4 GB of RAM) |
-| `androidSdk` | `ANDROID_HOME`, then `~/Library/Android/sdk` | Android SDK location |
+| `androidSdk` | `ANDROID_HOME`, `ANDROID_SDK_ROOT`, then `~/Library/Android/sdk` | Android SDK location (the first that has `platform-tools/adb`) |
 | `metroPortRange` | `[8082, 8099]` | Ports for each Stage's Metro |
 | `warmSimulatorMs` | 5 minutes | How long devices stay booted after a Concert |
 | `metroIdleMs` | 30 minutes | How long an idle Metro keeps running |
@@ -130,3 +154,5 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 | `binaryCacheGb` | 10 | Size cap for cached app builds |
 | `maxBuilds` | 1 | App builds that may run at once across Stages; raise it for native projects, whose branches rebuild often |
 | `emulatorSnapshots` | `true` | Boot emulators from a snapshot (~2 GB of disk per emulator) |
+
+`BATON_HOME` moves `~/.baton` (and so this file) elsewhere, and `BATON_SOCKET` the daemon's socket; useful for a second, isolated daemon.

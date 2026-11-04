@@ -11,7 +11,8 @@
 | Dashboard runs | Perform programmes, all flows or custom runs on any Stage or new worktree, from the dashboard and tray | ✅ |
 | Gallery and deep links | Screenshot thumbnails and lightbox, per-Act logs with follow, process details, `baton://` links | ✅ |
 | Affected flows | `hooks.selectFlows` maps a worktree's changes to flows; `--affected`, MCP and the dashboard | ✅ |
-| Binary cache | Build the app on a native-fingerprint miss, one build at a time, shared and cached across worktrees | ✅ |
+| Binary cache | Build the app on a native-fingerprint miss, shared and cached across worktrees, with `maxBuilds` builds at once | ✅ |
+| Dashboard and updates | Settings window, Check for Updates, open at login, Remove Stage, status filters, collapsed idle Stages, Perform on both platforms, the stall watchdog | ✅ |
 | Live viewer | One grid of every running Act's simulator, captured only while you're watching | ✅ |
 | Expo dev-client | Expo development builds connect to their Stage's Metro: prompt-free, `clearState`-safe, with generated `ios/` | ✅ |
 | Android | Emulators per Stage in a Baton-owned AVD home, their own budget, APK builds in the binary cache, bundle check, Live view, `--platform android` everywhere | ✅ |
@@ -19,9 +20,11 @@
 | Test runners | Maestro behind a `Runner` interface, then Detox on iOS and Android: tags in test names, retries per test, test APK builds, `init` detection and setup warnings | ✅ |
 | Native apps | Metro optional, native project roots, per-platform runners: XCUITest (build-for-testing, failure videos) and Android instrumentation (Espresso, Compose, Orchestrator), `init` detection, Android-only configs | ✅ |
 | Donations | A dismissable "buy me a coffee" window at launch, plus a menu item; Baton stays free | ✅ |
-| Distribution | Signed, notarised universal releases on `lmcjt37/baton-releases`, auto-update, and a Homebrew cask (`lmcjt37/tap/baton`) | ✅ |
+| Distribution | Signed, notarised universal releases on `lmcjt37/baton-releases`, auto-update, a Homebrew cask (`lmcjt37/tap/baton`), and an install script that checks checksums and signatures | ✅ |
 
 ## Next
 
+- **Detox with Expo dev clients.**
+- **XCUITest test plans:** picking tests by a test plan's configurations.
 - **npm package:** maybe; it would ship the CLI's source, which Baton.app doesn't expose.
 - **Homebrew:** submit to the official `homebrew/cask` once Baton is better known.

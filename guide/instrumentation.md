@@ -37,7 +37,7 @@ export default {
 
 - **Tests are ids, not files:** `com.example.LoginTests` (a class) or `com.example.LoginTests#signsIn` (one test). Pass them with `--test` (repeatable), MCP `tests`, or a programme's `tests`. With none, every test in the APK runs.
 - **Tags are annotations.** `tags: ['smoke']` runs tests annotated `@Smoke`, using `instrumentation.tags` to map the short name to its class; a fully qualified name (`com.example.Smoke`) works without the map. Several tags run tests with any of them; `excludeTags` skips tests with any of theirs.
-- **Env** from `baton.config.ts` (`env`, `envFiles`, programme and per-run values) reaches tests as instrumentation args: `InstrumentationRegistry.getArguments().getString("API_URL")`.
+- **Env** declared in `baton.config.ts` (`env`, a programme's `env`, or `-e` per run) reaches tests as instrumentation args: `InstrumentationRegistry.getArguments().getString("API_URL")`. Values from `envFiles` and `~/.baton/env` don't. Names are letters, digits, `_` and `.`.
 - **Affected runs:** `hooks.selectFlows` returns `{ tests: [...] }`.
 
 ## What Baton does
@@ -51,7 +51,7 @@ export default {
 ## Artifacts
 
 - **Failure videos.** Baton records each emulator's screen while its Act runs and keeps the recording around each failed test. The dashboard opens it where the test starts.
-- **Failure screenshots** need a JUnit rule in your tests, because the screen has already changed by the time Baton hears about a failure. Baton collects whatever the rule saves to `baton-screenshots/` in the app's external files folder:
+- **Failure screenshots** need a JUnit rule in your tests, because the screen has already changed by the time Baton hears about a failure. Baton collects whatever the rule saves to `baton-screenshots/` in the app's external files folder, matching each file to the test whose `Class#method` its name starts with (screenshots from passing tests are kept too). The folder is emptied at the start of each Act:
 
 ```kotlin
 class FailureScreenshot : TestWatcher() {
@@ -81,7 +81,13 @@ class FailureScreenshot : TestWatcher() {
 | `Unable to resolve activity … ComponentActivity` | `createComposeRule()` needs `debugImplementation("androidx.compose.ui:ui-test-manifest")` in the app; `createAndroidComposeRule<YourActivity>()` doesn't |
 | Text isn't found on Android 15+ | Apps draw edge to edge, so content can sit under the status bar; pad it (`Modifier.safeDrawingPadding()`) |
 | Espresso times out or sees a stale screen in a React Native app | Espresso can't wait for React Native's JS thread: register idling resources for it, or test those screens with Detox or Maestro (see Limits) |
-| The instrumentation ran no tests | Baton retries this as an infra error; if it persists, read `instrumentation.log` for `INSTRUMENTATION_FAILED` and check the test APK installed |
+| The instrumentation ran no tests, and printed nothing | Baton retries this as an infra error; if it persists, check the test APK installed |
+| `INSTRUMENTATION_FAILED` or `INSTRUMENTATION_ABORTED` | Not retried: the message is in the hint and `instrumentation.log`. Usually a crash while the test APK starts, or a test runner class that doesn't exist |
+| `Instrumentation needs a test APK` | Set `android.app.build.testOutput` (or `android.app.testPath`), and build it with `assembleAndroidTest` |
+| `Not a test class or id` | Use `com.example.LoginTests` or `com.example.LoginTests#signsIn` |
+| `Instrumentation args can't be named …` | Rename the env value: letters, digits, `_` and `.` only |
+| `The app process crashed before this test ran` | An earlier test in the Act crashed the app; fix that one, or turn on Orchestrator |
+| `Couldn't download orchestrator-…apk` | With `orchestrator: true`, Baton takes Orchestrator from Gradle's cache or downloads it from Google's Maven repository; go online once, and Baton keeps a copy |
 
 More symptoms and fixes: [Troubleshooting](troubleshooting.md).
 
