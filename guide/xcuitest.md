@@ -34,8 +34,8 @@ Baton caches the whole products folder (the app, the test runner and the `.xctes
 ## Choosing tests
 
 - **Tests are ids, not files:** `AppUITests` (a target), `AppUITests/LoginTests` (a class) or `AppUITests/LoginTests/testSignsIn` (one test). Pass them with `--test` (repeatable), MCP `tests`, or a programme's `tests`. With none, every test in the bundle runs.
-- **Tags** are a `_<tag>_` part of a test's name: `test_smoke_signsIn` has the tag `smoke`, and `test_smoke_slow_loads` has `smoke` and `slow`. `xcuitest.tags` adds whole classes to a tag. Several tags run tests with any of them; `excludeTags` skips tests with any of theirs.
-- **Env** from `baton.config.ts` (`env`, `envFiles`, programme and per-run values) reaches the test runner's environment: `ProcessInfo.processInfo.environment["API_URL"]`. It doesn't reach the app; pass what the app needs through `XCUIApplication().launchEnvironment`.
+- **Tags** are a `_<tag>_` part of a test's name, with `_` on both sides: `test_smoke_signsIn` has the tag `smoke`, and `test_smoke_slow_loads` has `smoke` and `slow`, but `test_signsIn_smoke` has none. Tags are letters and digits only. `xcuitest.tags` adds whole classes to a tag, under any name. Several tags run tests with any of them; `excludeTags` skips tests with any of theirs.
+- **Env** declared in `baton.config.ts` (`env`, a programme's `env`, or `-e` per run) reaches the test runner's environment: `ProcessInfo.processInfo.environment["API_URL"]`. Values from `envFiles` and `~/.baton/env` don't. Names are letters, digits and `_`. It doesn't reach the app; pass what the app needs through `XCUIApplication().launchEnvironment`.
 - **Affected runs:** `hooks.selectFlows` returns `{ tests: [...] }`.
 
 ## What Baton does
@@ -64,9 +64,13 @@ add(shot)
 
 | Error | Fix |
 |---|---|
+| `XCUITest needs an .xctestrun` | Set `app.build.xctestrun` (or `app.xctestrun` with a prebuilt app) |
 | No .xctestrun matches | The build command must run `build-for-testing` with `-derivedDataPath {derivedData}`; check `app.build.xctestrun` |
 | The app isn't in the products folder | Point `app.build.output` at the app `build-for-testing` built, beside the `.xctestrun` |
 | No flows matched | Check `--test` ids (`Target/Class/method`) and tags (`test_<tag>_…`) |
+| `Not a test target, class or id` | Use `AppUITests`, `AppUITests/LoginTests` or `AppUITests/LoginTests/testSignsIn`; target names can't contain spaces |
+| `XCUITest params can't be named …` | Rename the env value: letters, digits and `_` only |
+| `xcodebuild stopped before this test ran` | xcodebuild exited partway through an Act (often a simulator problem); the test is failed so a retry or Encore picks it up. `xcodebuild.log` says why |
 | The first run on a simulator is slow | xcodebuild installs the app and its test runner first (about 20s); later runs reuse them |
 | `The test runner crashed: …` | The test crashed the test runner (a `fatalError`, a force unwrap, `exit`). xcodebuild restarts the runner and carries on with the next test |
 | `Couldn't list the XCUITest tests: … never finished bootstrapping` | The test runner crashed while loading the test bundle, before any test: check the bundle's setup code (principal class, `+load`, static initialisers). Baton retries, since this can also be a passing simulator problem |

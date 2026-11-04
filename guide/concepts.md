@@ -28,17 +28,17 @@ Requests that arrive while the machine is full **wait in a queue instead of fail
 | **Stage** | One project in one worktree. A Stage owns a pool of simulators and emulators, and for React Native one Metro port. |
 | **Concert** | One test run on a Stage: a set of flows/tags plus an Act count. Concerts on one Stage run one after another. |
 | **Flow** | One test: a Maestro flow file, a Detox test case (`it`), or an XCUITest or instrumentation test method. |
-| **Act** | One shard of a Concert, running on one simulator ("Act 2/3"). |
+| **Act** | One shard of a Concert, running on one simulator or emulator ("Act 2/3"). |
 | **Programme** | A named, saved Concert preset in `baton.config.ts`, e.g. `baton perform smoke`. |
-| **Budget** | The machine-wide simulator limit (default 4), and a separate emulator limit (default 2). Concerts ask for N Acts and get as many as are free (at least 1). |
+| **Budget** | The machine-wide simulator limit (`maxSimulators`, default 4), and a separate emulator limit (`maxEmulators`, default 2). Concerts ask for N Acts and get as many as are free (at least 1). |
 | **External** | A process Baton didn't start, such as your own `yarn start` on 8081. Baton shows it but never touches it. |
-| **Warm** | A booted simulator or emulator kept for 5 minutes after a Concert so the next one starts fast. |
+| **Warm** | A booted simulator or emulator kept after a Concert (`warmSimulatorMs`, default 5 minutes) so the next one starts fast. Baton shuts warm devices down early when another Stage needs the budget. |
 
 ## Artifacts
 
-Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log; with XCUITest `xcodebuild.log`, each Act's result bundle and a video of each failure; with instrumentation `instrumentation.log`, each Act's logcat and failure videos. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`.
+Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: `build.log` when it built the app; with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log; with XCUITest `xcodebuild.log`, each Act's result bundle and a video of each failure; with instrumentation `instrumentation.log`, each Act's logcat and failure videos. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`.
 
-Machine-wide state (the daemon socket, registry, cached builds, Baton's AVDs) lives in `~/.baton/`.
+Machine-wide state lives in `~/.baton/` (or `BATON_HOME`): the daemon socket, registry, cached builds (`binaries/`), each Stage's DerivedData (`derived/`), Baton's AVDs (`avd/`), `daemon.log`, and each Stage's Metro log (`logs/metro-<stage>.log`).
 
 ## Failures
 

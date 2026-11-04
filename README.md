@@ -42,7 +42,7 @@ Baton runs Maestro flows, Detox, XCUITest and Android instrumentation (Espresso,
 | | Minimum | Tested with |
 |---|---|---|
 | macOS + Xcode, with an iOS simulator runtime | not yet established | macOS 26.6, Xcode 26.5, iOS 18.6 and 26.5 |
-| *Maestro projects:* [Maestro CLI](https://maestro.mobile.dev) | **2.11.0** | 2.11.0 |
+| *Maestro projects:* [Maestro CLI](https://docs.maestro.dev) | **2.11.0** | 2.11.0 |
 | *Maestro projects:* Java | `JAVA_HOME` set, or `java` on PATH | |
 | *Detox projects:* [Detox](https://wix.github.io/Detox/) in the project, and `applesimutils` for iOS | Detox 20 | Detox 20.51, Jest 29 |
 | *XCUITest projects:* a UI Testing target (XCTest) | Xcode 16 | Xcode 26.5 |
@@ -62,7 +62,7 @@ curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh
 
 This downloads the latest release, checks it against `SHA256SUMS` and its code signature, installs Baton to `/Applications` (or `~/Applications` if that isn't writable) and links the `baton` command into `/opt/homebrew/bin` or `/usr/local/bin`. There's no need to open Baton first.
 
-To reinstall, add `--force`: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh -s -- --force`. For a specific version: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | BATON_VERSION=1.1.0 sh`.
+To reinstall, add `--force`: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | sh -s -- --force`. For a specific version: `curl -fsSL https://lmcjt37.github.io/baton-releases/install.sh | BATON_VERSION=2.1.0 sh`. `BATON_APP_DIR` and `BATON_BIN_DIR` choose where the app and the `baton` command go.
 
 ### Download
 
@@ -168,6 +168,7 @@ New to Baton? Try it on one of the [examples](examples) first.
 | | |
 |---|---|
 | [bare-rn](examples/bare-rn) | Bare React Native, iOS and Android |
+| [bare-rn-detox](examples/bare-rn-detox) | Bare React Native with Detox tests, iOS and Android |
 | [expo-dev-client](examples/expo-dev-client) | Expo development build, iOS and Android |
 | [native](examples/native) | SwiftUI with XCUITest, Kotlin with Compose and Espresso; no React Native |
 
