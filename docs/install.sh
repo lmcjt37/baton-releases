@@ -114,7 +114,7 @@ main() {
   say "✓ Baton $version is installed. It lives in the menu bar and updates itself."
   say "  By installing it you agree to its licence: $LICENSE_URL"
   say ''
-  say 'Next, from your React Native project:'
+  say 'Next, from your iOS, Android or React Native project:'
   say '  baton init'
   say '  baton perform'
   say ''
