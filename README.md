@@ -158,7 +158,7 @@ New to Baton? Try it on one of the [examples](examples) first.
 | [Android instrumentation](guide/instrumentation.md) | Running Espresso and Compose tests: setup, choosing tests, failure videos, Orchestrator |
 | [CLI](guide/cli.md) | Every command, flag and exit code |
 | [MCP](guide/mcp.md) | Tools for AI agents |
-| [Menu bar app](guide/app.md) | Dashboard, Live viewer, logs, deep links, notifications |
+| [Menu bar app](guide/app.md) | Dashboard (Simplified and Detailed views), Live viewer, logs, deep links, notifications |
 | [Troubleshooting](guide/troubleshooting.md) | Common symptoms and fixes, by runner |
 | [Limitations](guide/limitations.md) | What isn't supported yet, including Espresso with React Native |
 | [Roadmap](guide/roadmap.md) | What Baton does today and what's next |
