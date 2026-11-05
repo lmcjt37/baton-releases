@@ -1,30 +1,33 @@
 # Roadmap
 
-| Phase | Scope | State |
-|---|---|---|
-| 0 · Spikes | `RCT_jsLocation` override, running Maestro processes in parallel, sharding, timings | ✅ |
-| 1 · Core + CLI | Daemon, registry/reconcile, ports, FIFO budget, Stage/Concert/Act lifecycle, bundle check, retries, `init` | ✅ |
-| 2 · MCP | A stdio MCP server with `baton_perform_and_wait` and friends, progress notifications, project setup | ✅ |
-| 3 · Electron | Tray icon, dashboard with cancel, failure notifications, External view, "Install `baton` command" | ✅ |
-| Baton.app | Self-contained packaged app and DMG (`npm run package`); the CLI, daemon and MCP all run on its bundled Node | ✅ |
-| Encore | Rerun only failed or flaky flows, from the CLI, MCP, the dashboard and failure notifications | ✅ |
-| Dashboard runs | Perform programmes, all flows or custom runs on any Stage or new worktree, from the dashboard and tray | ✅ |
-| Gallery and deep links | Screenshot thumbnails and lightbox, per-Act logs with follow, process details, `baton://` links | ✅ |
-| Affected flows | `hooks.selectFlows` maps a worktree's changes to flows; `--affected`, MCP and the dashboard | ✅ |
-| Binary cache | Build the app on a native-fingerprint miss, shared and cached across worktrees, with `maxBuilds` builds at once | ✅ |
-| Dashboard and updates | Settings window, Check for Updates, open at login, Remove Stage, status filters, collapsed idle Stages, Perform on both platforms, the stall watchdog | ✅ |
-| Live viewer | One grid of every running Act's simulator, captured only while you're watching | ✅ |
-| Expo dev-client | Expo development builds connect to their Stage's Metro: prompt-free, `clearState`-safe, with generated `ios/` | ✅ |
-| Android | Emulators per Stage in a Baton-owned AVD home, their own budget, APK builds in the binary cache, bundle check, Live view, `--platform android` everywhere | ✅ |
-| Android follow-ups | A Metro proxy per emulator (`clearState`-safe, one build for every Stage), Expo dev clients, snapshot boots | ✅ |
-| Test runners | Maestro behind a `Runner` interface, then Detox on iOS and Android: tags in test names, retries per test, test APK builds, `init` detection and setup warnings | ✅ |
-| Native apps | Metro optional, native project roots, per-platform runners: XCUITest (build-for-testing, failure videos) and Android instrumentation (Espresso, Compose, Orchestrator), `init` detection, Android-only configs | ✅ |
-| Donations | A dismissable "buy me a coffee" window at launch, plus a menu item; Baton stays free | ✅ |
-| Distribution | Signed, notarised universal releases on `lmcjt37/baton-releases`, auto-update, a Homebrew cask (`lmcjt37/tap/baton`), and an install script that checks checksums and signatures | ✅ |
-
 ## Next
+
+### 2.2.0 (TBC): a simpler dashboard
+
+Agents run the tests; the dashboard should let you watch them, not drive them. A new **View** setting picks **Simplified** (the default) or **Detailed** (today's dashboard, for more control).
+
+- **Simplified** hides the Stage actions (▶ Perform and Remove) and **＋ New Stage**, collapses Stages with nothing running, and shows only the active Concert on a busy Stage.
+- **▶ Perform** is shown disabled when a Stage can't run (for example, its worktree has no `baton.config.ts`), with the reason on hover.
+
+### Later
 
 - **Detox with Expo dev clients.**
 - **XCUITest test plans:** picking tests by a test plan's configurations.
 - **npm package:** maybe; it would ship the CLI's source, which Baton.app doesn't expose.
 - **Homebrew:** submit to the official `homebrew/cask` once Baton is better known.
+
+## Released
+
+Highlights of each release; [the releases page](https://github.com/lmcjt37/baton-releases/releases) has the full notes.
+
+| Version | Highlights |
+|---|---|
+| 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections |
+| 2.1.0 | **Native apps:** XCUITest and Android instrumentation (Espresso, Compose), `init` for Swift and Kotlin projects, Android-only configs, builds in parallel (`maxBuilds`), a troubleshooting guide |
+| 2.0.0 | **Detox** on iOS and Android, with `init` detection and setup warnings; programme `args` |
+| 1.5.0 | `maestroStallMs` renamed to `stallMs` |
+| 1.4.0 | Dashboard: active Stages first, Remove Stage, Perform on both platforms, collapse idle Stages, status filters |
+| 1.3.0 | Check for Updates and a Settings window; open at login |
+| 1.2.0 | Sessions sharing a worktree, ⚠ worktree changed, clearer queueing, the stall watchdog, instant cancel |
+| 1.1.0 | One-command install script, checked against checksums and signatures |
+| 1.0.0 | Per-worktree Metro, simulators and emulators; queueing; CLI, MCP and the menu bar app; Encore; affected flows; the build cache; Live viewer; Expo dev clients; Android; signed releases and a Homebrew cask |
