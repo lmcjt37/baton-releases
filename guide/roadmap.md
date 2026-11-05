@@ -2,15 +2,6 @@
 
 ## Next
 
-### 2.2.0 (TBC): a simpler dashboard
-
-Agents run the tests; the dashboard should let you watch them, not drive them. A new **View** setting picks **Simplified** (the default) or **Detailed** (today's dashboard, for more control).
-
-- **Simplified** hides the Stage actions (▶ Perform and Remove) and **＋ New Stage**, collapses Stages with nothing running, and shows only the active Concert on a busy Stage.
-- **▶ Perform** is shown disabled when a Stage can't run (for example, its worktree has no `baton.config.ts`), with the reason on hover.
-
-### Later
-
 - **Detox with Expo dev clients.**
 - **XCUITest test plans:** picking tests by a test plan's configurations.
 - **npm package:** maybe; it would ship the CLI's source, which Baton.app doesn't expose.
@@ -22,6 +13,7 @@ Highlights of each release; [the releases page](https://github.com/lmcjt37/baton
 
 | Version | Highlights |
 |---|---|
+| 2.2.0 | **Simplified dashboard** for watching agents' runs (the default), with **Detailed** for run controls; ▶ Perform greyed out with a reason when a Stage can't run |
 | 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections, daemon-start fix |
 | 2.1.0 | **Native apps:** XCUITest and Android instrumentation (Espresso, Compose), `init` for Swift and Kotlin projects, Android-only configs, builds in parallel (`maxBuilds`), a troubleshooting guide |
 | 2.0.0 | **Detox** on iOS and Android, with `init` detection and setup warnings; programme `args` |
