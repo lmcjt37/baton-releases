@@ -22,7 +22,7 @@ Highlights of each release; [the releases page](https://github.com/lmcjt37/baton
 
 | Version | Highlights |
 |---|---|
-| 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections |
+| 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections, daemon-start fix |
 | 2.1.0 | **Native apps:** XCUITest and Android instrumentation (Espresso, Compose), `init` for Swift and Kotlin projects, Android-only configs, builds in parallel (`maxBuilds`), a troubleshooting guide |
 | 2.0.0 | **Detox** on iOS and Android, with `init` detection and setup warnings; programme `args` |
 | 1.5.0 | `maestroStallMs` renamed to `stallMs` |
