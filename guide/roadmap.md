@@ -6,7 +6,7 @@
 
 Agents run the tests; the dashboard should let you watch them, not drive them. A new **View** setting picks **Simplified** (the default) or **Detailed** (today's dashboard, for more control).
 
-- **Simplified** hides the Stage actions (▶ Perform and Remove) and **＋ New Stage**, collapses Stages with nothing running, and shows only the active Concert on a busy Stage.
+- **Simplified** hides the run controls (▶ Perform, Remove, **＋ New Stage**, Cancel and Encore) and expands only each Stage's active or latest Concert. Logs, Details, Live and the status filters stay. Expanding and collapsing Stages and older Concerts is for Detailed.
 - **▶ Perform** is shown disabled when a Stage can't run (for example, its worktree has no `baton.config.ts`), with the reason on hover.
 
 ### Later
