@@ -25,7 +25,7 @@ Every Concert keeps its logs in `<project>/.baton/concerts/<id>/`: `build.log`, 
 | `The build finished but … isn't a built .apk` | Check `android.app.build.output` |
 | `… isn't a built test .apk` | The build command must also run `assembleAndroidTest`; check `android.app.build.testOutput` |
 | `app.path is not a built .app` · `android.app.path is not an .apk` | Point it at a Debug simulator `.app` or a debug APK |
-| Every branch rebuilds | Native changes change the fingerprint. Raise `maxBuilds` so worktrees build at once; `baton cache ls` shows what's cached |
+| Every branch rebuilds | Native changes change the fingerprint. Raise `maxBuilds` so worktrees build at once; `baton cache ls` shows what's cached. On Android, Gradle's build cache shares compiled output between worktrees; see [Native apps](native.md#builds) |
 | `JS bundle failed to build` (React Native) | Metro's error is in the hint. For a generated file that's missing, run its generator in `hooks.beforeMetro` |
 | `Metro exited before becoming ready` · `Metro not ready on :port after Ns` | Read the Metro log named in the hint. A slow first start may need a higher `metro.readyTimeoutMs` |
 | `No free Metro port in …` | Run `baton status` to see what holds the ports, or widen `metroPortRange` |
