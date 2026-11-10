@@ -13,6 +13,7 @@ Highlights of each release; [the releases page](https://github.com/lmcjt37/baton
 
 | Version | Highlights |
 |---|---|
+| 2.3.0 | XCUITest result-bundle warnings on the Concert; Gradle build cache guide |
 | 2.2.0 | **Simplified dashboard** for watching agents' runs (the default), with **Detailed** for run controls; ▶ Perform greyed out with a reason when a Stage can't run |
 | 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections, daemon-start fix |
 | 2.1.0 | **Native apps:** XCUITest and Android instrumentation (Espresso, Compose), `init` for Swift and Kotlin projects, Android-only configs, builds in parallel (`maxBuilds`), a troubleshooting guide |
