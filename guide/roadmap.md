@@ -2,6 +2,8 @@
 
 ## Next
 
+- **Keep devices booted:** a setting to turn off idle shutdown, so devices stay up between Concerts until another Stage needs them.
+- **Rust:** investigating whether moving parts of Baton to Rust would make it faster and lighter, before deciding to do it.
 - **Detox with Expo dev clients.**
 - **XCUITest test plans:** picking tests by a test plan's configurations.
 - **npm package:** maybe; it would ship the CLI's source, which Baton.app doesn't expose.
