@@ -2,7 +2,7 @@
 
 ## Next
 
-- **Keep devices booted:** a setting to turn off idle shutdown, so devices stay up between Concerts until another Stage needs them.
+- **Keep the daemon running:** a setting to turn off the daemon's idle shutdown, so the dashboard stays live without being open. The menu bar item stays either way.
 - **Rust:** investigating whether moving parts of Baton to Rust would make it faster and lighter, before deciding to do it.
 - **Detox with Expo dev clients.**
 - **XCUITest test plans:** picking tests by a test plan's configurations.
