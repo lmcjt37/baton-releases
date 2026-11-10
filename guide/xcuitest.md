@@ -74,7 +74,7 @@ add(shot)
 | The first run on a simulator is slow | xcodebuild installs the app and its test runner first (about 20s); later runs reuse them |
 | `The test runner crashed: …` | The test crashed the test runner (a `fatalError`, a force unwrap, `exit`). xcodebuild restarts the runner and carries on with the next test |
 | `Couldn't list the XCUITest tests: … never finished bootstrapping` | The test runner crashed while loading the test bundle, before any test: check the bundle's setup code (principal class, `+load`, static initialisers). Baton retries, since this can also be a passing simulator problem |
-| Failures have no message or video | `xcodebuild.log` says whether `xcresulttool` couldn't read the result bundle; open `tests.xcresult` in Xcode meanwhile |
+| Failures have no message or video | If `xcresulttool` couldn't read the result bundle, the Concert shows a warning, with details in `xcodebuild.log`; open `tests.xcresult` in Xcode meanwhile |
 
 More symptoms and fixes: [Troubleshooting](troubleshooting.md).
 
@@ -83,4 +83,4 @@ More symptoms and fixes: [Troubleshooting](troubleshooting.md).
 - **XCTest only.** Swift Testing can't run in UI test targets, so its tags and parameterised tests aren't available there.
 - **Test plans:** Baton picks tests by id and tag, not by a test plan's configurations.
 - **About 4 to 5 seconds** of xcodebuild overhead per Act and per retry.
-- **Tested with Xcode 26.5.** Baton reads failures and recordings with `xcresulttool` (Xcode 16 and later); if a newer Xcode changes its output, `xcodebuild.log` says so.
+- **Tested with Xcode 26.5.** Baton reads failures and recordings with `xcresulttool` (Xcode 16 and later); if a newer Xcode changes its output, the Concert shows a warning.
