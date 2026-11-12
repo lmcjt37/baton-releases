@@ -15,6 +15,7 @@ Highlights of each release; [the releases page](https://github.com/lmcjt37/baton
 
 | Version | Highlights |
 |---|---|
+| 2.4.0 | **Disk space:** DerivedData deleted with its Stage and trimmed by age and size, old artifacts deleted, Storage in Settings with Free Up Space…, a low-disk warning, `baton storage` |
 | 2.3.0 | XCUITest result-bundle warnings on the Concert; Gradle build cache guide |
 | 2.2.0 | **Simplified dashboard** for watching agents' runs (the default), with **Detailed** for run controls; ▶ Perform greyed out with a reason when a Stage can't run |
 | 2.1.1 | `baton close .` from any folder, the MCP server's version, guide corrections, daemon-start fix |

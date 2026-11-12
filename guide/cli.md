@@ -24,6 +24,7 @@ baton status                    # Stages, Concerts, budget, External processes
 | `baton close [stage\|path]` | Cancel a Stage's queued and running Concerts, stop its Metro (if any) and shut down its simulators and emulators |
 | `baton prune [--all]` | Delete Stages whose worktree is gone, plus orphaned `baton-*` simulators and Baton AVDs. `--all` removes every Stage and every simulator and AVD Baton created, cancelling running Concerts |
 | `baton cache ls` · `prune [--all]` · `rm <fingerprint>` | Cached app builds: list them, trim to the size cap (`binaryCacheGb`, default 10), or remove one bad build (this also clears the DerivedData it was built from). `prune --all` and `rm` refuse while a build is running |
+| `baton storage` · `storage tidy [--all]` | Disk used by DerivedData, cached builds, Concert artifacts and logs, and free disk space. `tidy` deletes now what Baton would delete on its own (see `derivedDataCacheGb`, `derivedDataMaxAgeDays` and `artifactMaxAgeDays` in [Configuration](configuration.md)); `--all` deletes all DerivedData, cached builds and artifacts not in use, keeping each Stage's latest Concert |
 | `baton stop [--force]` | Stop the daemon and everything it manages. It refuses while Concerts are queued or running; `--force` cancels them first |
 | `baton daemon` | Run the daemon in the foreground |
 | `baton mcp` | Run the MCP server on stdio ([MCP](mcp.md)) |

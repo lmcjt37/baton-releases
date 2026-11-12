@@ -29,6 +29,7 @@ Every Concert keeps its logs in `<project>/.baton/concerts/<id>/`: `build.log`, 
 | `JS bundle failed to build` (React Native) | Metro's error is in the hint. For a generated file that's missing, run its generator in `hooks.beforeMetro` |
 | `Metro exited before becoming ready` · `Metro not ready on :port after Ns` | Read the Metro log named in the hint. A slow first start may need a higher `metro.readyTimeoutMs` |
 | `No free Metro port in …` | Run `baton status` to see what holds the ports, or widen `metroPortRange` |
+| `~/.baton` takes a lot of disk | `baton storage` shows where it goes; `baton storage tidy --all` (or **Free Up Space…** in Settings) deletes DerivedData, cached builds and old artifacts not in use. Lower `derivedDataCacheGb` or `derivedDataMaxAgeDays` to keep less |
 | A bad build keeps being used | `baton cache rm <fingerprint>` removes it and the DerivedData it came from |
 
 ## Devices
