@@ -36,9 +36,9 @@ Requests that arrive while the machine is full **wait in a queue instead of fail
 
 ## Artifacts
 
-Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: `build.log` when it built the app; with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log; with XCUITest `xcodebuild.log`, each Act's result bundle and a video of each failure; with instrumentation `instrumentation.log`, each Act's logcat and failure videos. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`.
+Each Concert writes to `<project>/.baton/concerts/<id>/`: screenshots, logs and reports: `build.log` when it built the app; with Maestro the JUnit report, `maestro.log` and Maestro's debug output; with Detox `detox.log`, plus each test's device log; with XCUITest `xcodebuild.log`, each Act's result bundle and a video of each failure; with instrumentation `instrumentation.log`, each Act's logcat and failure videos. Baton writes a `.gitignore` in `.baton/`, so the folder never appears in `git status`. A Concert's artifacts are deleted 30 days after it finished (`artifactMaxAgeDays`), keeping each Stage's latest Concert.
 
-Machine-wide state lives in `~/.baton/` (or `BATON_HOME`): the daemon socket, registry, cached builds (`binaries/`), each Stage's DerivedData (`derived/`), Baton's AVDs (`avd/`), `daemon.log`, and each Stage's Metro log (`logs/metro-<stage>.log`).
+Machine-wide state lives in `~/.baton/` (or `BATON_HOME`): the daemon socket, registry, cached builds (`binaries/`), each Stage's DerivedData (`derived/`, deleted with its Stage, after 14 days without a build, or least recently built first when they pass 30 GB), Baton's AVDs (`avd/`), `daemon.log`, and each Stage's Metro log (`logs/metro-<stage>.log`).
 
 ## Failures
 

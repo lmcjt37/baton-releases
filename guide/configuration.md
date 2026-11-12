@@ -152,6 +152,9 @@ The first boot of each emulator saves a snapshot, and later boots resume from it
 | `bundleCheckTimeoutMs` | 90 seconds | How long the app has to connect to its Metro |
 | `stallMs` | 5 minutes | Stop the test runner when it prints nothing and writes no output for this long, and report an infra error (`0` turns this off). Was `maestroStallMs` before 2.0 |
 | `binaryCacheGb` | 10 | Size cap for cached app builds |
+| `derivedDataCacheGb` | 30 | Size cap for every Stage's DerivedData together; the least recently built goes first (`0`: no cap) |
+| `derivedDataMaxAgeDays` | 14 | Delete a Stage's DerivedData after this long without a build (`0`: never) |
+| `artifactMaxAgeDays` | 30 | Delete a Concert's artifacts this long after it finished, always keeping each Stage's latest Concert (`0`: never) |
 | `maxBuilds` | 1 | App builds that may run at once across Stages; raise it for native projects, whose branches rebuild often |
 | `emulatorSnapshots` | `true` | Boot emulators from a snapshot (~2 GB of disk per emulator) |
 
