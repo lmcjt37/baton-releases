@@ -81,7 +81,7 @@ class FailureScreenshot : TestWatcher() {
 | `Unable to resolve activity … ComponentActivity` | `createComposeRule()` needs `debugImplementation("androidx.compose.ui:ui-test-manifest")` in the app; `createAndroidComposeRule<YourActivity>()` doesn't |
 | Text isn't found on Android 15+ | Apps draw edge to edge, so content can sit under the status bar; pad it (`Modifier.safeDrawingPadding()`) |
 | Espresso times out or sees a stale screen in a React Native app | Espresso can't wait for React Native's JS thread: register idling resources for it, or test those screens with Detox or Maestro (see Limits) |
-| The instrumentation ran no tests, and printed nothing | Baton retries this as an infra error; if it persists, check the test APK installed |
+| The instrumentation ran no tests, and printed nothing | Baton retries this as an infra error. If every attempt is silent, the Concert ends as an infra error whose hint says so: check the emulator finished booting and the test APK installed |
 | `INSTRUMENTATION_FAILED` or `INSTRUMENTATION_ABORTED` | Not retried: the message is in the hint and `instrumentation.log`. Usually a crash while the test APK starts, or a test runner class that doesn't exist |
 | `Instrumentation needs a test APK` | Set `android.app.build.testOutput` (or `android.app.testPath`), and build it with `assembleAndroidTest` |
 | `Not a test class or id` | Use `com.example.LoginTests` or `com.example.LoginTests#signsIn` |

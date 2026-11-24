@@ -8,8 +8,8 @@ Any MCP client can launch `baton mcp`, which speaks MCP over stdio. It starts th
 
 | Tool | |
 |---|---|
-| `baton_perform_and_wait` | Run flows for a worktree and wait. Returns pass/fail per flow, failure reasons, screenshot and video paths and a next step. Sends progress notifications. `flows` takes flow files (Maestro, Detox), `tests` takes test ids (XCUITest, instrumentation); `affected: true` runs only what the worktree's changes affect; `platform: 'android'` runs on emulators (the default for an Android-only config). Also `programme`, `tags`, `excludeTags`, `acts` (1–8), `retries` (0–3), `env`, and `timeoutSec` (default 900, up to 1800). |
-| `baton_perform` / `baton_await` | The same, split into queue-now and wait-later (for long runs). `baton_await` waits `timeoutSec` (default 300) |
+| `baton_perform_and_wait` | Run flows for a worktree and wait. Returns pass/fail per flow, failure reasons, screenshot and video paths and a next step. Sends progress notifications. `flows` takes flow files (Maestro, Detox), `tests` takes test ids (XCUITest, instrumentation); `affected: true` runs only what the worktree's changes affect; `platform: 'android'` runs on emulators (the default for an Android-only config). Also `programme`, `tags`, `excludeTags`, `acts` (1–8), `retries` (0–3), `env`, and `timeoutSec` (default 100, up to 1800). |
+| `baton_perform` / `baton_await` | The same, split into queue-now and wait-later (for long runs). `baton_await` waits `timeoutSec` (default 100) |
 | `baton_status` | Stages, Concerts, budget, External processes |
 | `baton_logs` | Test runner output for a Concert or Act (the last 150 lines, or `lines`), or a React Native Stage's Metro log |
 | `baton_encore` | Rerun only a finished Concert's failed (or flaky) flows, and wait for the result (`wait: false` returns the new Concert id for `baton_await`). A Concert that hit an infra error, or was cancelled or interrupted, is rerun in full; a passed one can't be. |
@@ -19,5 +19,7 @@ Any MCP client can launch `baton mcp`, which speaks MCP over stdio. It starts th
 `worktreePath` defaults to the client's MCP root (or the server's working directory), and must be absolute when given.
 
 While a Concert waits, its progress says what for: a free simulator (`#2 in queue`) or another session's Concert on the same worktree (`waiting for Concert 1a2b3c4d (claude-code) on this worktree`). If the wait times out first, the result says it's still queued and to call `baton_await`, not to start another run. A summary starts with a warning when the worktree's code changed while the Concert waited or ran, which happens when sessions share a worktree.
+
+By default each call waits at most 100 seconds, because Claude Code moves an MCP call that runs past 2 minutes to the background, and its result can be lost once the agent replies. A longer run returns "still in progress", and the agent keeps calling `baton_await` until it finishes, all in the same turn. For a client with a shorter tool-call limit, set `BATON_MCP_WAIT_SEC` (10–1800) in the `env` of Baton's MCP server config.
 
 Results include a `baton://concert/<id>` link, so a link in an agent's transcript opens that run in the [dashboard](app.md).
